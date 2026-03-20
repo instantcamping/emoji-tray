@@ -3,22 +3,108 @@
 * { margin:0; padding:0; box-sizing:border-box; }
 body.no-scroll { overflow:hidden; }
 :root {
-  --bg:#1a1208; --accent:#F4A535; --red:#E84040; --green:#40C870;
-  --muted:rgba(255,200,100,0.8);
+  --bg:#0d1a0f; --accent:#FF8C42; --red:#E84040; --green:#40C870;
+  --muted:rgba(255,220,150,0.8);
 }
 body {
-  background:var(--bg);
+  background:linear-gradient(180deg,#06101e 0%,#0c1a30 30%,#112244 60%,#162050 100%);
   display:flex; flex-direction:column; align-items:center;
   font-family:'Noto Sans KR',sans-serif;
   overflow-x:hidden; padding:16px 16px 28px;
   position:relative; user-select:none;
+  min-height:100vh;
 }
+/* 별 */
 body::before {
-  content:''; position:fixed; inset:0; pointer-events:none;
-  background:
-    repeating-linear-gradient(92deg,transparent 0,transparent 60px,rgba(255,255,255,0.012) 60px,rgba(255,255,255,0.012) 62px),
-    linear-gradient(180deg,#1a1208,#2a1f0e 50%,#1a1208);
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 3% 2%, rgba(255,255,255,.8) 50%, transparent 100%),
+    radial-gradient(1px 1px at 7% 9%, rgba(255,255,255,.5) 50%, transparent 100%),
+    radial-gradient(1px 1px at 10% 4%, rgba(255,255,255,.7) 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 14% 14%, rgba(255,255,255,.6) 50%, transparent 100%),
+    radial-gradient(1px 1px at 18% 1%, rgba(255,255,255,.4) 50%, transparent 100%),
+    radial-gradient(1px 1px at 22% 8%, rgba(255,255,255,.7) 50%, transparent 100%),
+    radial-gradient(2px 2px at 25% 18%, rgba(255,255,255,.9) 50%, transparent 100%),
+    radial-gradient(1px 1px at 28% 3%, rgba(255,255,255,.5) 50%, transparent 100%),
+    radial-gradient(1px 1px at 32% 11%, rgba(255,255,255,.4) 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 36% 6%, rgba(255,255,255,.8) 50%, transparent 100%),
+    radial-gradient(1px 1px at 40% 16%, rgba(255,255,255,.5) 50%, transparent 100%),
+    radial-gradient(1px 1px at 43% 2%, rgba(255,255,255,.6) 50%, transparent 100%),
+    radial-gradient(1px 1px at 47% 10%, rgba(255,255,255,.3) 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 50% 5%, rgba(255,255,255,.7) 50%, transparent 100%),
+    radial-gradient(1px 1px at 53% 20%, rgba(255,255,255,.5) 50%, transparent 100%),
+    radial-gradient(1px 1px at 57% 3%, rgba(255,255,255,.6) 50%, transparent 100%),
+    radial-gradient(2px 2px at 60% 8%, rgba(255,255,255,.8) 50%, transparent 100%),
+    radial-gradient(1px 1px at 63% 15%, rgba(255,255,255,.4) 50%, transparent 100%),
+    radial-gradient(1px 1px at 66% 1%, rgba(255,255,255,.5) 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 70% 12%, rgba(255,255,255,.7) 50%, transparent 100%),
+    radial-gradient(1px 1px at 73% 6%, rgba(255,255,255,.3) 50%, transparent 100%),
+    radial-gradient(1px 1px at 76% 19%, rgba(255,255,255,.6) 50%, transparent 100%),
+    radial-gradient(1px 1px at 79% 4%, rgba(255,255,255,.5) 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 82% 10%, rgba(255,255,255,.8) 50%, transparent 100%),
+    radial-gradient(1px 1px at 85% 17%, rgba(255,255,255,.4) 50%, transparent 100%),
+    radial-gradient(1px 1px at 88% 2%, rgba(255,255,255,.7) 50%, transparent 100%),
+    radial-gradient(2px 2px at 91% 7%, rgba(255,255,255,.9) 50%, transparent 100%),
+    radial-gradient(1px 1px at 94% 13%, rgba(255,255,255,.5) 50%, transparent 100%),
+    radial-gradient(1px 1px at 97% 5%, rgba(255,255,255,.6) 50%, transparent 100%),
+    radial-gradient(1px 1px at 5% 22%, rgba(255,255,255,.4) 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 16% 24%, rgba(255,255,255,.6) 50%, transparent 100%),
+    radial-gradient(1px 1px at 33% 26%, rgba(255,255,255,.5) 50%, transparent 100%),
+    radial-gradient(1px 1px at 45% 23%, rgba(255,255,255,.3) 50%, transparent 100%),
+    radial-gradient(1px 1px at 58% 25%, rgba(255,255,255,.7) 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 72% 22%, rgba(255,255,255,.5) 50%, transparent 100%),
+    radial-gradient(1px 1px at 86% 24%, rgba(255,255,255,.4) 50%, transparent 100%),
+    radial-gradient(1px 1px at 2% 15%, rgba(255,255,255,.6) 50%, transparent 100%),
+    radial-gradient(1px 1px at 38% 19%, rgba(255,255,255,.5) 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 55% 13%, rgba(255,255,255,.7) 50%, transparent 100%),
+    radial-gradient(1px 1px at 68% 17%, rgba(255,255,255,.4) 50%, transparent 100%),
+    radial-gradient(1px 1px at 95% 9%, rgba(255,255,255,.6) 50%, transparent 100%);
 }
+/* 달 */
+body::after {
+  content:''; position:fixed; pointer-events:none; z-index:0;
+  top:5%; right:12%; width:50px; height:50px;
+  border-radius:50%;
+  background:radial-gradient(circle at 40% 40%, #ffeedd, #ddc880 60%, rgba(200,180,120,0.3));
+  box-shadow:0 0 30px rgba(255,238,200,0.3), 0 0 80px rgba(255,220,150,0.15);
+}
+
+/* 구름 */
+.bg-clouds {
+  position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden;
+}
+.bg-cloud {
+  position:absolute; border-radius:50%; opacity:0;
+  background:rgba(220,230,245,0.35);
+  filter:blur(6px);
+  animation:cloudDriftBg linear infinite;
+}
+.bg-cloud:nth-child(1) { width:200px; height:60px; top:10%; --start:-200px; animation-duration:80s; animation-delay:0s; opacity:0.8; --o:0.8; }
+.bg-cloud:nth-child(2) { width:260px; height:70px; top:18%; --start:-260px; animation-duration:100s; animation-delay:-30s; opacity:0.7; --o:0.7; }
+.bg-cloud:nth-child(3) { width:180px; height:50px; top:6%; --start:-180px; animation-duration:90s; animation-delay:-50s; opacity:0.65; --o:0.65; }
+.bg-cloud:nth-child(4) { width:220px; height:55px; top:24%; --start:-220px; animation-duration:110s; animation-delay:-15s; opacity:0.6; --o:0.6; }
+@keyframes cloudDriftBg {
+  0% { left:var(--start); opacity:0; }
+  5% { opacity:var(--o,0.7); }
+  90% { opacity:var(--o,0.7); }
+  100% { left:110%; opacity:0; }
+}
+
+/* 흙 땅 */
+.bg-mountains {
+  position:fixed; bottom:0; left:0; right:0; pointer-events:none; z-index:0;
+  height:22vh;
+  background:linear-gradient(180deg, #4a3525 0%, #3a2818 30%, #2e1f10 70%, #1e150a 100%);
+  border-top:3px solid #5c4030;
+}
+.bg-mountains::before {
+  content:''; position:absolute; top:-1px; left:0; right:0; height:8px;
+  background:linear-gradient(180deg, rgba(92,64,48,0.6), transparent);
+}
+.bg-mountains::after { display:none; }
+
+/* 나무 실루엣 (사용 안함) */
+.bg-trees { display:none; }
 
 .game-wrap {
   width:100%; max-width:900px;
@@ -122,13 +208,13 @@ h1 { font-family:'Gaegu',cursive; font-size:clamp(1.6rem,3.5vw,2.4rem); color:va
 #levelClearOverlay {
   position:fixed; inset:0; z-index:9000;
   display:none; flex-direction:column; align-items:center; justify-content:center;
-  gap:.6rem; background:rgba(8,4,0,.92); backdrop-filter:blur(10px);
+  gap:.6rem; background:rgba(5,12,5,.92); backdrop-filter:blur(10px);
 }
 #levelClearOverlay.show { display:flex; animation:fadeIn .5s ease; }
 .lc-icon { font-size:clamp(3.5rem,8vw,5rem); animation:trophyBounce .6s ease; }
 .lc-title {
   font-family:'Orbitron',sans-serif; font-size:clamp(2.2rem,5.5vw,3.5rem); color:var(--accent);
-  text-shadow:0 0 20px rgba(244,165,53,.4);
+  text-shadow:0 0 20px rgba(255,140,66,.4);
 }
 .lc-sub { font-family:'Orbitron',sans-serif; font-size:clamp(1rem,2vw,1.3rem); color:var(--muted); }
 .lc-countdown {
@@ -141,7 +227,7 @@ h1 { font-family:'Gaegu',cursive; font-size:clamp(1.6rem,3.5vw,2.4rem); color:va
 #gameoverOverlay {
   position:fixed; inset:0; z-index:9000; overflow-y:auto;
   display:none; flex-direction:column; align-items:center;
-  gap:.7rem; background:rgba(8,4,0,.7); backdrop-filter:blur(12px);
+  gap:.7rem; background:rgba(5,12,5,.7); backdrop-filter:blur(12px);
   padding: 20px 0 50px;
 }
 @keyframes fadeIn { from{opacity:0} to{opacity:1} }
@@ -155,7 +241,7 @@ h1 { font-family:'Gaegu',cursive; font-size:clamp(1.6rem,3.5vw,2.4rem); color:va
 }
 .go-title {
   font-family:'Gaegu',cursive; font-size:clamp(2rem,5vw,3rem); color:var(--accent);
-  text-shadow:0 2px 12px rgba(244,165,53,.3);
+  text-shadow:0 2px 12px rgba(255,140,66,.3);
 }
 .go-sub-title {
   font-family:'Noto Sans KR',sans-serif; font-size:clamp(.95rem,2vw,1.2rem);
@@ -163,7 +249,7 @@ h1 { font-family:'Gaegu',cursive; font-size:clamp(1.6rem,3.5vw,2.4rem); color:va
 }
 .go-level-badge {
   font-family:'Orbitron',sans-serif; font-size:clamp(.7rem,1.3vw,.85rem); font-weight:700;
-  color:var(--accent); background:rgba(244,165,53,.12); border:1px solid rgba(244,165,53,.25);
+  color:var(--accent); background:rgba(255,140,66,.12); border:1px solid rgba(255,140,66,.25);
   border-radius:6px; padding:3px 10px; letter-spacing:.05em;
 }
 .go-scores {
@@ -201,12 +287,12 @@ h1 { font-family:'Gaegu',cursive; font-size:clamp(1.6rem,3.5vw,2.4rem); color:va
 }
 .go-nickname-title {
   font-family:'Gaegu',cursive; font-size:clamp(1.4rem,3vw,1.9rem); color:var(--accent);
-  text-shadow:0 0 20px rgba(244,165,53,.4);
+  text-shadow:0 0 20px rgba(255,140,66,.4);
   animation:titleGlow 1.5s ease-in-out infinite alternate;
 }
 @keyframes titleGlow {
-  from { text-shadow:0 0 10px rgba(244,165,53,.3); }
-  to   { text-shadow:0 0 25px rgba(244,165,53,.6), 0 0 50px rgba(244,165,53,.2); }
+  from { text-shadow:0 0 10px rgba(255,140,66,.3); }
+  to   { text-shadow:0 0 25px rgba(255,140,66,.6), 0 0 50px rgba(255,140,66,.2); }
 }
 /* 컨페티 파티클 */
 .confetti {
@@ -222,16 +308,16 @@ h1 { font-family:'Gaegu',cursive; font-size:clamp(1.6rem,3.5vw,2.4rem); color:va
 .go-nickname-row { display:flex; gap:.5rem; align-items:center; justify-content:center; }
 .go-nickname input {
   padding:.5rem .8rem; border:2px solid #000;
-  border-radius:10px; background:rgba(255,255,255,.9); color:#1a1208;
+  border-radius:10px; background:rgba(255,255,255,.9); color:#0d1a0f;
   font-family:'Noto Sans KR',sans-serif; font-size:0.9rem;
   outline:none; transition:border-color .2s;
 }
 .go-nickname input[type="text"],
 .go-nickname input[type="email"] { width:220px; }
 .go-nickname input:focus { border-color:var(--accent); }
-.go-nickname input::placeholder { color:rgba(26,18,8,.5); }
+.go-nickname input::placeholder { color:rgba(13,26,15,.5); }
 .btn-save {
-  padding:.5rem 1.2rem; background:linear-gradient(180deg,#F4A535,#e08a18); color:#1a1208;
+  padding:.5rem 1.2rem; background:linear-gradient(180deg,#FF8C42,#d4691a); color:#0d1a0f;
   border:none; border-radius:10px; font-family:'Gaegu',cursive; font-size:1.1rem;
   font-weight:700; cursor:pointer; transition:transform .15s;
 }
@@ -301,7 +387,7 @@ h1 { font-family:'Gaegu',cursive; font-size:clamp(1.6rem,3.5vw,2.4rem); color:va
 }
 .go-lb-table tbody tr:last-child td { border-bottom:none; }
 .go-lb-table tbody tr:nth-child(even) td { background:rgba(255,255,255,.03); }
-.go-lb-table tbody tr.me td { background:rgba(244,165,53,.12); color:#fff; font-weight:700; }
+.go-lb-table tbody tr.me td { background:rgba(255,140,66,.12); color:#fff; font-weight:700; }
 .go-lb-rank { text-align:center; font-weight:700; color:var(--muted); }
 .go-lb-table tbody tr.me .go-lb-rank { color:var(--accent); }
 .go-lb-rank.gold { color:#FFD700; }
@@ -316,16 +402,16 @@ h1 { font-family:'Gaegu',cursive; font-size:clamp(1.6rem,3.5vw,2.4rem); color:va
 .start-overlay {
   position:absolute; left:0; right:0; top:0; min-height:100vh;
   display:flex; flex-direction:column; align-items:center; justify-content:center;
-  background:radial-gradient(ellipse at 50% 40%, rgba(40,25,8,.92), rgba(10,5,0,.97));
+  background:radial-gradient(ellipse at 50% 40%, rgba(0,0,0,.85), rgba(0,0,0,.9));
   border-radius:20px; gap:.6rem; padding:1.5rem 1rem;
-  backdrop-filter:blur(10px); z-index:30;
-  border:1px solid rgba(244,165,53,.15);
-  box-shadow:inset 0 0 80px rgba(244,165,53,.05), 0 0 40px rgba(0,0,0,.5);
+  backdrop-filter:blur(6px); z-index:30;
+  border:1px solid rgba(255,140,66,.15);
+  box-shadow:inset 0 0 80px rgba(255,140,66,.05), 0 0 40px rgba(0,0,0,.5);
 }
 .start-overlay-emoji {
   font-size:clamp(4rem,10vw,6rem);
   animation:float-emoji 2.5s ease-in-out infinite;
-  filter:drop-shadow(0 8px 20px rgba(244,165,53,.4));
+  filter:drop-shadow(0 8px 20px rgba(255,140,66,.4));
 }
 @keyframes float-emoji {
   0%,100% { transform:translateY(0) rotate(-3deg); }
@@ -333,7 +419,7 @@ h1 { font-family:'Gaegu',cursive; font-size:clamp(1.6rem,3.5vw,2.4rem); color:va
 }
 .start-overlay-title {
   font-family:'Gaegu',cursive; font-size:clamp(2.2rem,5vw,3.2rem); color:var(--accent);
-  text-shadow:0 2px 16px rgba(244,165,53,.4), 0 0 40px rgba(244,165,53,.15);
+  text-shadow:0 2px 16px rgba(255,140,66,.4), 0 0 40px rgba(255,140,66,.15);
   letter-spacing:.05em;
 }
 .start-overlay-sub {
@@ -367,13 +453,13 @@ h1 { font-family:'Gaegu',cursive; font-size:clamp(1.6rem,3.5vw,2.4rem); color:va
 .start-special-icon { font-size:1.15rem; flex-shrink:0; width:24px; text-align:center; }
 .start-special-desc { line-height:1.3; }
 .btn {
-  margin-top:.6rem; padding:.9rem 3rem; background:linear-gradient(180deg,#F4A535,#e08a18); color:#1a1208;
+  margin-top:.6rem; padding:.9rem 3rem; background:linear-gradient(180deg,#FF8C42,#d4691a); color:#0d1a0f;
   border:none; border-radius:14px; font-family:'Gaegu',cursive; font-size:clamp(1.4rem,2.5vw,1.8rem);
   font-weight:700; letter-spacing:.05em;
   cursor:pointer; transition:transform .15s,box-shadow .15s;
-  box-shadow:0 4px 20px rgba(244,165,53,.45), inset 0 1px 0 rgba(255,255,255,.3);
+  box-shadow:0 4px 20px rgba(255,140,66,.45), inset 0 1px 0 rgba(255,255,255,.3);
 }
-.btn:hover { transform:scale(1.06); box-shadow:0 6px 28px rgba(244,165,53,.6), inset 0 1px 0 rgba(255,255,255,.3); }
+.btn:hover { transform:scale(1.06); box-shadow:0 6px 28px rgba(255,140,66,.6), inset 0 1px 0 rgba(255,255,255,.3); }
 .btn:active { transform:scale(.95); }
 
 /* 창고 */
@@ -429,7 +515,7 @@ h1 { font-family:'Gaegu',cursive; font-size:clamp(1.6rem,3.5vw,2.4rem); color:va
 .e-chip .pts {
   position:absolute; bottom:-2px; right:-2px;
   font-size:.55rem; font-weight:700; line-height:1;
-  background:var(--accent); color:#1a1208;
+  background:var(--accent); color:#0d1a0f;
   border-radius:6px; padding:1px 4px;
   font-family:'Noto Sans KR',sans-serif;
   pointer-events:none;
@@ -451,7 +537,7 @@ h1 { font-family:'Gaegu',cursive; font-size:clamp(1.6rem,3.5vw,2.4rem); color:va
 }
 .mystery-toast {
   position:fixed; z-index:9999;
-  background:rgba(30,20,10,.92); color:#fff;
+  background:rgba(15,25,15,.92); color:#fff;
   font-size:1rem; font-weight:700;
   padding:8px 18px; border-radius:24px;
   border:2px solid rgba(255,215,0,.6);
@@ -477,7 +563,7 @@ h1 { font-family:'Gaegu',cursive; font-size:clamp(1.6rem,3.5vw,2.4rem); color:va
   animation:goldenChipPulse 0.8s ease-in-out infinite alternate;
 }
 .e-chip.golden:hover { background:linear-gradient(135deg,rgba(255,215,0,.4),rgba(255,180,0,.3)); transform:scale(1.18); }
-.e-chip.golden .pts { background:linear-gradient(135deg,#FFD700,#FFA500); color:#1a1208; font-weight:800; }
+.e-chip.golden .pts { background:linear-gradient(135deg,#FFD700,#FFA500); color:#0d1a0f; font-weight:800; }
 @keyframes goldenChipPulse {
   0%   { box-shadow:0 0 6px rgba(255,215,0,.3), inset 0 0 6px rgba(255,215,0,.1); }
   100% { box-shadow:0 0 16px rgba(255,215,0,.6), inset 0 0 12px rgba(255,215,0,.3), 0 0 24px rgba(255,215,0,.2); }
@@ -495,7 +581,7 @@ h1 { font-family:'Gaegu',cursive; font-size:clamp(1.6rem,3.5vw,2.4rem); color:va
 /* 골든타임 안내 토스트 */
 .golden-toast {
   position:fixed; z-index:9999;
-  background:linear-gradient(135deg,rgba(50,35,10,.95),rgba(30,20,5,.95));
+  background:linear-gradient(135deg,rgba(20,40,20,.95),rgba(30,20,5,.95));
   color:#FFD700;
   font-weight:700;
   padding:20px 36px; border-radius:18px;
@@ -533,7 +619,7 @@ h1 { font-family:'Gaegu',cursive; font-size:clamp(1.6rem,3.5vw,2.4rem); color:va
 .golden-shelf-overlay {
   position:absolute; inset:0; z-index:50;
   display:flex; align-items:center; justify-content:center;
-  background:linear-gradient(135deg,rgba(40,30,5,.92),rgba(25,18,2,.92));
+  background:linear-gradient(135deg,rgba(18,35,18,.92),rgba(12,22,12,.92));
   border-radius:12px;
   color:#FFD700;
   font-size:clamp(1.5rem,4vw,2.5rem);
@@ -561,7 +647,7 @@ h1 { font-family:'Gaegu',cursive; font-size:clamp(1.6rem,3.5vw,2.4rem); color:va
 #dragGhost {
   position:fixed; pointer-events:none; z-index:9999;
   transform:translate(-50%,-60%); display:none;
-  filter:drop-shadow(0 6px 14px rgba(244,165,53,.8));
+  filter:drop-shadow(0 6px 14px rgba(255,140,66,.8));
 }
 
 /* 드래그 반짝이 꼬리 */
@@ -677,7 +763,7 @@ h1 { font-family:'Gaegu',cursive; font-size:clamp(1.6rem,3.5vw,2.4rem); color:va
 }
 .overlap-toast {
   position:fixed; z-index:999;
-  background:rgba(30,20,10,.88); color:#fff;
+  background:rgba(15,25,15,.88); color:#fff;
   font-size:.82rem; font-weight:600;
   padding:6px 14px; border-radius:20px;
   border:1.5px solid var(--red);

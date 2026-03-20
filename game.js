@@ -2,29 +2,29 @@
 const EMOJI_DATA = [
   // 100점 (w:0.1) - 가볍지만 고점수 2개
   {e:'🪙',w:0.1,pts:100},{e:'💰',w:0.1,pts:100},
-  // 1점 (w:0.1) - 깃털 4개
-  {e:'🦋',w:0.1},{e:'🌈',w:0.1},{e:'💫',w:0.1},{e:'🌸',w:0.1},
+  // 1점 (w:0.1) - 깃털급 4개
+  {e:'🌿',w:0.1},{e:'🍃',w:0.1},{e:'🦋',w:0.1},{e:'🌸',w:0.1},
   // 5점 (w:0.5) - 가벼운 7개
-  {e:'🍒',w:0.5},{e:'🍓',w:0.5},{e:'🔥',w:0.5},
-  {e:'🍪',w:0.5},{e:'🍦',w:0.5},{e:'🥝',w:0.5},{e:'🍄',w:0.5},
+  {e:'🌽',w:0.5},{e:'🥜',w:0.5},{e:'🍫',w:0.5},
+  {e:'🫐',w:0.5},{e:'🍯',w:0.5},{e:'🧂',w:0.5},{e:'🍡',w:0.5},
   // 10점 (w:1.0) - 보통 14개
-  {e:'🍎',w:1.0},{e:'🍊',w:1.0},{e:'🍋',w:1.0},{e:'🍑',w:1.0},
-  {e:'🍣',w:1.0},{e:'🧁',w:1.0},{e:'🎲',w:1.0},{e:'🌵',w:1.0},
-  {e:'🍩',w:1.0},{e:'🎯',w:1.0},{e:'🪄',w:1.0},{e:'🌮',w:1.0},
-  {e:'🍇',w:1.0},{e:'🐸',w:1.0},
+  {e:'🥩',w:1.0},{e:'🌭',w:1.0},{e:'🍖',w:1.0},{e:'🥓',w:1.0},
+  {e:'🧅',w:1.0},{e:'🥔',w:1.0},{e:'🍄',w:1.0},{e:'🌶️',w:1.0},
+  {e:'🥕',w:1.0},{e:'🫑',w:1.0},{e:'🧄',w:1.0},{e:'🥚',w:1.0},
+  {e:'🍞',w:1.0},{e:'🥐',w:1.0},
   // 20점 (w:2.0) - 무거운 9개
-  {e:'🍕',w:2.0},{e:'🏀',w:2.0},{e:'🥭',w:2.0},
-  {e:'🍔',w:2.0},{e:'🍜',w:2.0},{e:'🧸',w:2.0},{e:'🍍',w:2.0},
-  {e:'🦊',w:2.0},{e:'👑',w:2.0},
+  {e:'🍕',w:2.0},{e:'🥘',w:2.0},{e:'🍳',w:2.0},
+  {e:'🧀',w:2.0},{e:'🥧',w:2.0},{e:'🍗',w:2.0},{e:'🥙',w:2.0},
+  {e:'🍔',w:2.0},{e:'🫕',w:2.0},
   // 30점 (w:3.0) - 아주무거운 7개
-  {e:'🎸',w:3.0},{e:'🦄',w:3.0},{e:'🎂',w:3.0},
-  {e:'🛸',w:3.0},{e:'🏆',w:3.0},{e:'🎁',w:3.0},{e:'🐧',w:3.0},
+  {e:'🎸',w:3.0},{e:'🏕️',w:3.0},{e:'🔥',w:3.0},
+  {e:'🪵',w:3.0},{e:'🏆',w:3.0},{e:'🎁',w:3.0},{e:'🐻',w:3.0},
   // 50점 (w:5.0) - 초무거운 4개
-  {e:'💎',w:5.0},{e:'🚀',w:5.0},{e:'🦁',w:5.0},{e:'🐳',w:5.0},
+  {e:'🪨',w:5.0},{e:'🦌',w:5.0},{e:'🦁',w:5.0},{e:'🐻‍❄️',w:5.0},
 ];
 const GIANT_EMOJI = [
-  {e:'🐘',w:10},{e:'🦛',w:10},{e:'🗿',w:10},{e:'⚓',w:10},
-  {e:'🧱',w:10},{e:'🛢️',w:10},{e:'🪨',w:10},{e:'🏋️',w:10},
+  {e:'🐻',w:10},{e:'🦛',w:10},{e:'🗿',w:10},{e:'⚓',w:10},
+  {e:'🧱',w:10},{e:'🏔️',w:10},{e:'🪨',w:10},{e:'🏋️',w:10},
 ];
 // 특수 이모지 (모든 레벨에서 등장, 15% 확률)
 const SPECIAL_EMOJI = [
@@ -131,7 +131,7 @@ function renderLeaderboard(board, myScore, myName) {
 
 // ── 축하 컨페티 ──────────────────────────────────────────
 function spawnConfetti() {
-  const colors = ['#FFD700','#FF6B6B','#4ECDC4','#45B7D1','#F4A535','#E84040','#40C870','#FF9FF3','#FFF'];
+  const colors = ['#FF8C42','#FF6B2B','#4ECDC4','#7CFC00','#3CB371','#E84040','#40C870','#FFA07A','#FFF'];
   const shapes = ['square','circle','rect'];
   const count = 60;
   for(let i=0; i<count; i++){
@@ -312,7 +312,7 @@ document.addEventListener('touchend',  e=>{ if(!dragging)return; ghost.style.dis
 function moveGhost(cx,cy){ ghost.style.left=cx+'px'; ghost.style.top=cy+'px'; spawnSparkles(cx,cy); }
 
 // ── 반짝이 꼬리 ──────────────────────────────────────────
-const SPARKLE_COLORS = ['#FFD700','#FFA500','#FF6347','#FF69B4','#87CEEB','#ADFF2F','#fff'];
+const SPARKLE_COLORS = ['#FF8C42','#FF6B2B','#FFD700','#7CFC00','#3CB371','#FFA07A','#fff'];
 let lastSparkleTime = 0;
 function spawnSparkles(cx, cy) {
   const now = performance.now();
@@ -335,7 +335,7 @@ function spawnSparkles(cx, cy) {
 function hoverCheck(cx,cy) {
   const sv = clientToSvg(cx,cy);
   const on = isOnTray(sv.x, sv.y);
-  dropHighlight.setAttribute('stroke', on?'rgba(244,165,53,0.8)':'rgba(244,165,53,0)');
+  dropHighlight.setAttribute('stroke', on?'rgba(255,140,66,0.8)':'rgba(255,140,66,0)');
   dropHighlight.setAttribute('opacity', on?'1':'0');
 }
 
@@ -354,7 +354,7 @@ function countNearby(sx, sy) {
 function showOverlapToast(cx, cy) {
   const el = document.createElement('div');
   el.className = 'overlap-toast';
-  el.textContent = '⚠ 같은 곳에 3개 이상 놓을 수 없어요!';
+  el.textContent = '⚠ 같은 곳에 3개 이상 올릴 수 없어요!';
   document.body.appendChild(el);
   const rect = el.getBoundingClientRect();
   const vw = window.innerWidth;
@@ -738,7 +738,7 @@ function endGoldenTime() {
   goldenTimer = null;
   floorShelf.classList.remove('golden-time');
   dropHighlight.setAttribute('opacity', '0');
-  dropHighlight.setAttribute('stroke', 'rgba(244,165,53,0)');
+  dropHighlight.setAttribute('stroke', 'rgba(255,140,66,0)');
   dropHighlight.setAttribute('stroke-width', '4');
   dropHighlight.classList.remove('golden-flash');
   hideGoldenShelfOverlay();
@@ -878,39 +878,56 @@ function spawnGoldenBurst(cx, cy) {
   }
 }
 
-// ── 드롭 시 반짝이 폭발 ─────────────────────────────────
+// ── 드롭 시 불꽃 + 연기 폭발 ─────────────────────────────
+const FIRE_COLORS = ['#FF4500','#FF6B2B','#FF8C42','#FFD700','#FFA500'];
+const SMOKE_COLORS = ['rgba(120,120,120,0.6)','rgba(90,90,90,0.5)','rgba(160,160,160,0.4)'];
 function spawnDropBurst(cx, cy) {
-  const count = 12 + Math.floor(Math.random()*6);
-  for(let i=0; i<count; i++){
+  // 불꽃 파티클
+  const fireCount = 10 + Math.floor(Math.random()*5);
+  for(let i=0; i<fireCount; i++){
     const el = document.createElement('div');
     el.className = 'sparkle';
     const size = 5 + Math.random()*10;
-    const color = SPARKLE_COLORS[Math.floor(Math.random()*SPARKLE_COLORS.length)];
-    const angle = (Math.PI*2 / count) * i + (Math.random()-.5)*.5;
-    const dist = 20 + Math.random()*40;
+    const color = FIRE_COLORS[Math.floor(Math.random()*FIRE_COLORS.length)];
+    const angle = (Math.PI*2 / fireCount) * i + (Math.random()-.5)*.5;
+    const dist = 15 + Math.random()*35;
     const ox = Math.cos(angle) * dist;
-    const oy = Math.sin(angle) * dist;
-    const dur = 400 + Math.random()*500;
-    el.style.cssText = `left:${cx}px;top:${cy}px;width:${size}px;height:${size}px;background:${color};box-shadow:0 0 ${size*3}px ${color};animation:sparkle-burst ${dur}ms ease-out forwards;--sx:${ox}px;--sy:${oy}px;`;
+    const oy = Math.sin(angle) * dist - Math.random()*15; // 위로 치우침
+    const dur = 350 + Math.random()*400;
+    el.style.cssText = `left:${cx}px;top:${cy}px;width:${size}px;height:${size}px;background:${color};box-shadow:0 0 ${size*3}px ${color};animation:sparkle-burst ${dur}ms ease-out forwards;--sx:${ox}px;--sy:${oy}px;border-radius:40%;`;
+    document.body.appendChild(el);
+    el.addEventListener('animationend', ()=>el.remove());
+  }
+  // 연기 파티클 (위로 올라감)
+  const smokeCount = 4 + Math.floor(Math.random()*3);
+  for(let i=0; i<smokeCount; i++){
+    const el = document.createElement('div');
+    el.className = 'sparkle';
+    const size = 12 + Math.random()*16;
+    const color = SMOKE_COLORS[Math.floor(Math.random()*SMOKE_COLORS.length)];
+    const ox = (Math.random()-.5)*30;
+    const oy = -(30 + Math.random()*50); // 위로 올라감
+    const dur = 600 + Math.random()*600;
+    el.style.cssText = `left:${cx}px;top:${cy}px;width:${size}px;height:${size}px;background:${color};animation:sparkle-burst ${dur}ms ease-out forwards;--sx:${ox}px;--sy:${oy}px;border-radius:50%;`;
     document.body.appendChild(el);
     el.addEventListener('animationend', ()=>el.remove());
   }
 }
 
-// ── 점수 별 퍼지기 효과 ─────────────────────────────────
+// ── 점수 불꽃/연기 퍼지기 효과 ─────────────────────────────
 function spawnScoreStars(cx, cy, pts) {
-  const stars = ['⭐','🌟','✨','💫','⚡'];
+  const flames = ['🔥','💨','✨','🔥','🔥','💨'];
   const count = Math.min(5 + Math.floor(pts / 5), 14);
   for(let i = 0; i < count; i++) {
     const el = document.createElement('div');
     el.className = 'score-star';
-    el.textContent = stars[Math.floor(Math.random() * stars.length)];
+    el.textContent = flames[Math.floor(Math.random() * flames.length)];
     const angle = (Math.PI * 2 / count) * i + (Math.random() - .5) * .8;
-    const dist = 90 + Math.random() * 130;
+    const dist = 60 + Math.random() * 100;
     const tx = Math.cos(angle) * dist;
-    const ty = Math.sin(angle) * dist - 30;
-    const rot = (Math.random() - .5) * 540;
-    const dur = 700 + Math.random() * 500;
+    const ty = Math.sin(angle) * dist - 40; // 위쪽으로 더 치우침
+    const rot = (Math.random() - .5) * 300;
+    const dur = 600 + Math.random() * 500;
     const delay = Math.random() * 120;
     const fs = 0.7 + Math.random() * 0.7;
     el.style.cssText = `left:${cx}px;top:${cy}px;--tx:${tx}px;--ty:${ty}px;--rot:${rot}deg;--dur:${dur}ms;--delay:${delay}ms;--fs:${fs}rem;`;
@@ -1007,8 +1024,8 @@ function init() {
   frozen=false; if(frozenTimer){clearTimeout(frozenTimer);frozenTimer=null;}
   frostFlakes.forEach(el=>el.remove()); frostFlakes=[];
   document.getElementById('frostOverlay').classList.remove('active');
-  goldenTime=false; if(goldenTimer){clearTimeout(goldenTimer);goldenTimer=null;}
-  floorShelf.classList.remove('golden-time');
+  if(goldenTime || goldenTimer) endGoldenTime();
+  goldenCountdownActive = false;
   startOverlay.style.display='none';
   goOverlay.classList.remove('show');
   document.getElementById('levelClearOverlay').classList.remove('show');
@@ -1262,8 +1279,8 @@ function levelClear() {
       frozen=false; if(frozenTimer){clearTimeout(frozenTimer);frozenTimer=null;}
       frostFlakes.forEach(el=>el.remove()); frostFlakes=[];
       document.getElementById('frostOverlay').classList.remove('active');
-      goldenTime=false; if(goldenTimer){clearTimeout(goldenTimer);goldenTimer=null;}
-      floorShelf.classList.remove('golden-time');
+      if(goldenTime || goldenTimer) endGoldenTime();
+      goldenCountdownActive = false;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       trayGroup.style.transition = '';
       trayGroup.style.transform = '';
@@ -1313,8 +1330,8 @@ function showGameOverScreen() {
       spawnConfetti();
       document.getElementById('goNickInput').focus();
     } else {
-      document.querySelector('.go-emoji').textContent = '💥';
-      document.querySelector('.go-title').textContent = '쏟아졌다!';
+      document.querySelector('.go-emoji').textContent = '🔥';
+      document.querySelector('.go-title').textContent = '그릴이 뒤집어졌다!';
       if(goSubTitle) goSubTitle.textContent = lvlText + '에서 실패';
       const board = await loadLeaderboard();
       renderLeaderboard(board, finalScore, '');

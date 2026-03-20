@@ -3,26 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>쟁반 균형 게임 - 이모지 드래그 밸런스 게임</title>
+<title>캠핑 그릴 게임 - 바베큐 밸런스 게임</title>
 
 <!-- SEO Meta Tags -->
-<meta name="description" content="무게균형과 순발력으로 랭킹 10위 주인공이 되어보세요!">
-<meta name="keywords" content="쟁반 균형 게임, 이모지 게임, 밸런스 게임, 브라우저 게임, 웹 게임, 드래그 게임, 무료 게임">
-<meta name="author" content="쟁반균형게임">
+<meta name="description" content="캠핑 그릴 위에 재료를 올려 균형을 맞춰보세요! 랭킹 10위에 도전!">
+<meta name="keywords" content="캠핑 그릴 게임, 바베큐 게임, 밸런스 게임, 브라우저 게임, 웹 게임, 드래그 게임, 캠핑 게임">
+<meta name="author" content="캠핑그릴게임">
 <meta name="robots" content="index, follow">
-<meta name="theme-color" content="#1a1208">
+<meta name="theme-color" content="#0d1a0f">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="쟁반 균형 게임 - 이모지 드래그 밸런스 게임">
-<meta property="og:description" content="무게균형과 순발력으로 랭킹 10위 주인공이 되어보세요!">
+<meta property="og:title" content="캠핑 그릴 게임 - 바베큐 밸런스 게임">
+<meta property="og:description" content="캠핑 그릴 위에 재료를 올려 균형을 맞춰보세요! 랭킹 10위에 도전!">
 <meta property="og:image" content="og_img.png">
 <meta property="og:locale" content="ko_KR">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="쟁반 균형 게임 - 이모지 드래그 밸런스 게임">
-<meta name="twitter:description" content="무게균형과 순발력으로 랭킹 10위 주인공이 되어보세요!">
+<meta name="twitter:title" content="캠핑 그릴 게임 - 바베큐 밸런스 게임">
+<meta name="twitter:description" content="캠핑 그릴 위에 재료를 올려 균형을 맞춰보세요! 랭킹 10위에 도전!">
 <meta name="twitter:image" content="og_img.png">
 
 <link rel="stylesheet" href="style.css">
@@ -54,11 +54,21 @@
 
 </head>
 <body>
+<!-- 배경: 구름, 산, 나무 -->
+<div class="bg-clouds">
+  <div class="bg-cloud"></div>
+  <div class="bg-cloud"></div>
+  <div class="bg-cloud"></div>
+  <div class="bg-cloud"></div>
+</div>
+<div class="bg-mountains"></div>
+<div class="bg-trees"></div>
+
 <div class="game-wrap">
 
   <div class="top-header">
     <div class="title-group">
-      <h1>🍽️ 쟁반 균형 게임</h1>
+      <h1>🏕️ 캠핑 그릴 게임</h1>
     </div>
 
     <div class="hud">
@@ -90,27 +100,41 @@
   <div class="main-area">
     <div class="scene-wrap">
       <div class="scene" id="scene">
-        <!-- 받침대 SVG (고정, 기울어지지 않음) -->
+        <!-- 받침대 SVG (고정, 기울어지지 않음) — 캠핑 그릴 다리 -->
         <svg id="standSvg" viewBox="35 45 490 330" xmlns="http://www.w3.org/2000/svg"
           style="position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;transform:translateZ(-10px);">
           <defs>
             <linearGradient id="standGrad" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stop-color="#5C3A1E"/>
-              <stop offset="50%" stop-color="#9B6E4C"/>
-              <stop offset="100%" stop-color="#5C3A1E"/>
+              <stop offset="0%" stop-color="#3a3a3a"/>
+              <stop offset="50%" stop-color="#6a6a6a"/>
+              <stop offset="100%" stop-color="#3a3a3a"/>
             </linearGradient>
             <linearGradient id="baseGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#8B5E3C"/>
-              <stop offset="100%" stop-color="#4a2a10"/>
+              <stop offset="0%" stop-color="#555"/>
+              <stop offset="100%" stop-color="#2a2a2a"/>
             </linearGradient>
             <filter id="blur"><feGaussianBlur stdDeviation="8"/></filter>
+            <!-- 모닥불 그라데이션 -->
+            <radialGradient id="fireGlow" cx="50%" cy="80%" r="50%">
+              <stop offset="0%" stop-color="rgba(255,100,20,0.4)"/>
+              <stop offset="60%" stop-color="rgba(255,60,0,0.15)"/>
+              <stop offset="100%" stop-color="rgba(255,60,0,0)"/>
+            </radialGradient>
           </defs>
           <!-- 그림자 -->
-          <ellipse cx="280" cy="310" rx="195" ry="22" fill="rgba(0,0,0,0.45)" filter="url(#blur)"/>
-          <!-- 받침대 기둥 -->
-          <rect x="271" y="272" width="18" height="80" rx="5" fill="url(#standGrad)"/>
-          <!-- 받침대 바닥 -->
-          <ellipse cx="280" cy="354" rx="55" ry="12" fill="url(#baseGrad)"/>
+          <ellipse cx="280" cy="340" rx="180" ry="18" fill="rgba(0,0,0,0.4)" filter="url(#blur)"/>
+          <!-- 모닥불 글로우 -->
+          <ellipse cx="280" cy="320" rx="100" ry="40" fill="url(#fireGlow)"/>
+          <!-- 그릴 다리 (삼각 구조) -->
+          <line x1="200" y1="270" x2="240" y2="355" stroke="#4a4a4a" stroke-width="6" stroke-linecap="round"/>
+          <line x1="360" y1="270" x2="320" y2="355" stroke="#4a4a4a" stroke-width="6" stroke-linecap="round"/>
+          <line x1="280" y1="270" x2="280" y2="358" stroke="#555" stroke-width="5" stroke-linecap="round"/>
+          <!-- 바닥 연결 바 -->
+          <ellipse cx="280" cy="356" rx="50" ry="8" fill="url(#baseGrad)"/>
+          <!-- 작은 숯/장작 -->
+          <ellipse cx="260" cy="348" rx="18" ry="5" fill="#3a2010" transform="rotate(-15,260,348)"/>
+          <ellipse cx="300" cy="350" rx="20" ry="5" fill="#4a2a15" transform="rotate(10,300,350)"/>
+          <ellipse cx="275" cy="346" rx="14" ry="4" fill="#2a1508" transform="rotate(25,275,346)"/>
         </svg>
 
         <!-- 쟁반 + 이모지 (기울어지는 그룹) -->
@@ -119,47 +143,49 @@
           <svg id="traySvg" viewBox="35 45 490 330" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <radialGradient id="trayGrad" cx="42%" cy="38%" r="60%">
-                <stop offset="0%"   stop-color="#ddb870"/>
-                <stop offset="45%"  stop-color="#b07840"/>
-                <stop offset="100%" stop-color="#7a4e28"/>
+                <stop offset="0%"   stop-color="#7a7a7a"/>
+                <stop offset="45%"  stop-color="#505050"/>
+                <stop offset="100%" stop-color="#2e2e2e"/>
               </radialGradient>
               <radialGradient id="rimGrad" cx="50%" cy="30%" r="70%">
-                <stop offset="0%" stop-color="#8a5025"/>
-                <stop offset="100%" stop-color="#3a1808"/>
+                <stop offset="0%" stop-color="#5a5a5a"/>
+                <stop offset="100%" stop-color="#1a1a1a"/>
               </radialGradient>
-              <pattern id="woodGrain" x="0" y="0" width="30" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(12)">
-                <rect width="30" height="4" fill="none"/>
-                <line x1="0" y1="2" x2="30" y2="2" stroke="rgba(255,255,255,0.035)" stroke-width="1.5"/>
+              <!-- 그릴 격자 패턴 -->
+              <pattern id="grillLines" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse" patternTransform="rotate(0)">
+                <rect width="20" height="20" fill="none"/>
+                <line x1="0" y1="10" x2="20" y2="10" stroke="rgba(255,255,255,0.08)" stroke-width="2"/>
+                <line x1="10" y1="0" x2="10" y2="20" stroke="rgba(255,255,255,0.05)" stroke-width="1.5"/>
               </pattern>
               <clipPath id="trayClip">
                 <ellipse cx="280" cy="172" rx="228" ry="108"/>
               </clipPath>
             </defs>
 
-            <!-- 쟁반 테두리 -->
+            <!-- 그릴 테두리 (금속 림) -->
             <ellipse cx="280" cy="176" rx="234" ry="114"
               fill="url(#rimGrad)"
               style="filter:drop-shadow(0 10px 24px rgba(0,0,0,0.7))"/>
 
-            <!-- 쟁반 표면 -->
+            <!-- 그릴 표면 -->
             <ellipse cx="280" cy="172" rx="228" ry="108" fill="url(#trayGrad)"/>
 
-            <!-- 나뭇결 -->
-            <ellipse cx="280" cy="172" rx="228" ry="108" fill="url(#woodGrain)" clip-path="url(#trayClip)"/>
+            <!-- 그릴 격자 -->
+            <ellipse cx="280" cy="172" rx="228" ry="108" fill="url(#grillLines)" clip-path="url(#trayClip)"/>
 
-            <!-- 안쪽 테두리 링 -->
+            <!-- 안쪽 금속 테두리 링 -->
             <ellipse cx="280" cy="172" rx="210" ry="92" fill="none"
-              stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+              stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
             <ellipse cx="280" cy="172" rx="185" ry="80" fill="none"
-              stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+              stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
 
-            <!-- 하이라이트 -->
+            <!-- 금속 하이라이트 -->
             <ellipse cx="220" cy="138" rx="90" ry="32"
-              fill="rgba(255,255,255,0.07)" transform="rotate(-10,220,138)"/>
+              fill="rgba(255,255,255,0.09)" transform="rotate(-10,220,138)"/>
 
             <!-- 드롭존 하이라이트 -->
             <ellipse id="dropHighlight" cx="280" cy="172" rx="228" ry="108"
-              fill="none" stroke="rgba(244,165,53,0)" stroke-width="4" opacity="0"
+              fill="none" stroke="rgba(255,140,66,0)" stroke-width="4" opacity="0"
               style="transition:opacity .15s"/>
           </svg>
 
@@ -193,24 +219,24 @@
     <!-- 창고 -->
     <div class="floor-wrap">
       <div class="floor-shelf" id="floorShelf"></div>
-      <div class="floor-label">이모지를 드래그해서 쟁반에 올리세요</div>
+      <div class="floor-label">재료를 드래그해서 그릴 위에 올리세요</div>
     </div>
   </div>
 </div>
 
 <!-- 시작 오버레이 (main-area 전체 덮음) -->
 <div class="start-overlay" id="startOverlay">
-  <div class="start-overlay-emoji">🍽️</div>
-  <div class="start-overlay-title">쟁반 균형 게임</div>
-  <div class="start-overlay-sub">이모지를 드래그해서 쟁반 위에 올려보세요!</div>
+  <div class="start-overlay-emoji">🏕️</div>
+  <div class="start-overlay-title">캠핑 그릴 게임</div>
+  <div class="start-overlay-sub">재료를 드래그해서 그릴 위에 올려보세요!</div>
 
   <button class="btn" id="startBtn">게임 시작</button>
 
   <div class="start-overlay-special">
     <div class="start-special-title">게임 방법</div>
     <div class="start-special-list">
-      <div class="start-special-item"><span class="start-special-icon">👆</span><span class="start-special-desc">이모지를 드래그해서 쟁반 위에 올리기</span></div>
-      <div class="start-special-item"><span class="start-special-icon">💥</span><span class="start-special-desc">이모지가 떨어지면 게임 오버</span></div>
+      <div class="start-special-item"><span class="start-special-icon">👆</span><span class="start-special-desc">재료를 드래그해서 그릴 위에 올리기</span></div>
+      <div class="start-special-item"><span class="start-special-icon">🔥</span><span class="start-special-desc">재료가 떨어지면 게임 오버</span></div>
       <div class="start-special-item"><span class="start-special-icon">🏆</span><span class="start-special-desc">높은 점수로 TOP 10 랭커에 올라가기</span></div>
     </div>
   </div>
@@ -218,10 +244,10 @@
   <details class="start-overlay-special special-toggle">
     <summary class="start-special-title">특수 이모지 설명</summary>
     <div class="start-special-list">
-      <div class="start-special-item"><span class="start-special-icon">💣</span><span class="start-special-desc">폭탄 — 쟁반 위 이모지 전부 제거</span></div>
+      <div class="start-special-item"><span class="start-special-icon">💣</span><span class="start-special-desc">폭탄 — 그릴 위 재료 전부 제거</span></div>
       <div class="start-special-item"><span class="start-special-icon">🧊</span><span class="start-special-desc">얼음 — 기울기 잠시 동결</span></div>
-      <div class="start-special-item"><span class="start-special-icon">🧲</span><span class="start-special-desc">자석 — 주변 이모지를 끌어당김</span></div>
-      <div class="start-special-item"><span class="start-special-icon">⭐</span><span class="start-special-desc">별 — 쟁반 위 별을 클릭하면 높은점수 획득</span></div>
+      <div class="start-special-item"><span class="start-special-icon">🧲</span><span class="start-special-desc">자석 — 주변 재료를 끌어당김</span></div>
+      <div class="start-special-item"><span class="start-special-icon">⭐</span><span class="start-special-desc">별 — 그릴 위 별을 클릭하면 높은점수 획득</span></div>
       <div class="start-special-item"><span class="start-special-icon">❓</span><span class="start-special-desc">랜덤박스 — 특수효과가 랜덤 발동!</span></div>
     </div>
   </details>
@@ -240,9 +266,9 @@
 
 <!-- 게임오버 전체화면 -->
 <div id="gameoverOverlay">
-  <div class="go-emoji">💥</div>
+  <div class="go-emoji">🔥</div>
   <div class="go-title-row">
-    <div class="go-title">전부 쏟아졌다!</div>
+    <div class="go-title">그릴이 뒤집어졌다!</div>
     <div class="go-sub-title" id="goSubTitle"></div>
   </div>
   <div class="go-level-badge" id="goLevelBadge">Lv.1</div>
