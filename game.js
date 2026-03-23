@@ -1332,7 +1332,7 @@ function showGameOverScreen() {
     } else {
       document.querySelector('.go-emoji').textContent = '🔥';
       document.querySelector('.go-title').textContent = '그릴이 뒤집어졌다!';
-      if(goSubTitle) goSubTitle.textContent = lvlText + '에서 실패';
+      if(goSubTitle) goSubTitle.textContent = '10위권 밖입니다. 다시 도전해보세요!';
       const board = await loadLeaderboard();
       renderLeaderboard(board, finalScore, '');
       lbArea.classList.add('show');
@@ -1455,7 +1455,12 @@ document.getElementById('goNickSave').addEventListener('click', async ()=>{
     return;
   }
   if(email && !document.getElementById('privacyAgree').checked) {
-    alert('이메일을 등록하려면 개인정보 수집 및 이용에 동의해주세요.');
+    alert('이벤트에 참여하시려면 이메일 수집에 동의해주세요.');
+    const checkLabel = document.querySelector('.privacy-check');
+    checkLabel.classList.remove('highlight');
+    void checkLabel.offsetHeight;
+    checkLabel.classList.add('highlight');
+    document.getElementById('privacyAgree').focus();
     return;
   }
 
@@ -1465,6 +1470,10 @@ document.getElementById('goNickSave').addEventListener('click', async ()=>{
 
   const finalScore = parseInt(document.getElementById('goCount').textContent) || 0;
   await saveScore(name, finalScore, email);
+
+  if(email) {
+    document.getElementById('ytModal').classList.add('show');
+  }
 
   document.getElementById('goNickname').classList.remove('show');
 
@@ -1498,6 +1507,29 @@ document.getElementById('goNickSkip').addEventListener('click', async ()=>{
   renderLeaderboard(board, 0, '');
   document.getElementById('goLeaderboard').classList.add('show');
   document.getElementById('retryBtn').style.display = '';
+});
+
+// 모달 닫기 (공통: 닫기버튼 + 배경 클릭)
+document.querySelectorAll('.custom-modal-close[data-close]').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.getElementById(btn.dataset.close).classList.remove('show');
+  });
+});
+document.querySelectorAll('.custom-modal-bg').forEach(bg=>{
+  bg.addEventListener('click', (e)=>{
+    if(e.target === bg) bg.classList.remove('show');
+  });
+});
+// 유튜브 모달 닫기
+document.getElementById('ytModalClose').addEventListener('click', ()=>{
+  document.getElementById('ytModal').classList.remove('show');
+});
+// 게임방법 / 특수이모지 팝업
+document.getElementById('howToPlayBtn').addEventListener('click', ()=>{
+  document.getElementById('howToPlayModal').classList.add('show');
+});
+document.getElementById('specialInfoBtn').addEventListener('click', ()=>{
+  document.getElementById('specialInfoModal').classList.add('show');
 });
 
 document.getElementById('retryBtn').addEventListener('click', ()=>{
