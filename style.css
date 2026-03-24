@@ -854,6 +854,12 @@ h1 { font-family:'Gaegu',cursive; font-size:clamp(1.6rem,3.5vw,2.4rem); color:va
   position:fixed; pointer-events:none; z-index:9500;
   transform-origin:center center;
 }
+.drag-guide {
+  position:fixed; z-index:9600; pointer-events:none;
+  font-size:2.8rem; opacity:0;
+  transform:translate(-50%,-50%);
+  filter:drop-shadow(0 4px 12px rgba(0,0,0,.5));
+}
 .overlap-toast {
   position:fixed; z-index:999;
   background:rgba(15,25,15,.88); color:#fff;
@@ -879,7 +885,7 @@ h1 { font-family:'Gaegu',cursive; font-size:clamp(1.6rem,3.5vw,2.4rem); color:va
 }
 .custom-modal-bg.show { display:flex; animation:fadeIn .3s ease; }
 .custom-modal {
-  background:linear-gradient(180deg,#1a2a1a,#0d1a0f);
+  background:linear-gradient(180deg,#1e1e1e,#111111);
   border:1.5px solid rgba(255,140,66,.35);
   border-radius:18px; padding:28px 32px;
   text-align:center; max-width:340px; width:88vw;
@@ -890,6 +896,7 @@ h1 { font-family:'Gaegu',cursive; font-size:clamp(1.6rem,3.5vw,2.4rem); color:va
   font-family:'Noto Sans KR',sans-serif; font-size:clamp(.9rem,2vw,1.05rem);
   color:rgba(255,255,255,.9); line-height:1.6; margin-bottom:16px;
 }
+.custom-modal-msg strong {color:#FF8C42}
 .custom-modal-link {
   display:inline-block; padding:10px 24px;
   background:linear-gradient(180deg,#FF8C42,#d4691a); color:#0d1a0f;
@@ -907,3 +914,21 @@ h1 { font-family:'Gaegu',cursive; font-size:clamp(1.6rem,3.5vw,2.4rem); color:va
   cursor:pointer; transition:border-color .2s;
 }
 .custom-modal-close:hover { border-color:rgba(255,255,255,.4); }
+.yt-btn {
+  display:block; width:80%; max-width:260px; margin:8px auto 0; padding:12px 0;
+  border:none; border-radius:12px; font-family:'Gaegu',cursive; font-size:clamp(1.1rem,2.2vw,1.35rem);
+  font-weight:700; text-align:center; text-decoration:none; letter-spacing:.03em;
+  cursor:pointer; transition:transform .15s,box-shadow .15s;
+}
+.yt-btn:hover { transform:scale(1.05); }
+.yt-btn:active { transform:scale(.95); }
+.yt-btn.primary {
+  background:linear-gradient(180deg,#FF8C42,#d4691a); color:#0d1a0f;
+  box-shadow:0 4px 16px rgba(255,140,66,.4);
+}
+.yt-btn.primary:hover { box-shadow:0 6px 24px rgba(255,140,66,.6); }
+.yt-btn.secondary {
+  background:linear-gradient(180deg,#4a4a4a,#2a2a2a); color:#fff;
+  box-shadow:0 4px 12px rgba(0,0,0,.3);
+}
+.yt-btn.secondary:hover { box-shadow:0 6px 18px rgba(0,0,0,.4); }

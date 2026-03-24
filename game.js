@@ -93,8 +93,7 @@ async function loadLeaderboard() {
 async function saveScore(name, sc, email) {
   try {
     const fb = window._fb; if(!fb) return;
-    const data = { name: name, score: sc, date: new Date().toISOString() };
-    if(email) data.email = email;
+    const data = { name: name, score: sc, date: new Date().toISOString(), email: email };
     await fb.addDoc(fb.collection(fb.db,'rankings'), data);
   } catch(e) { console.warn('점수 저장 실패:', e); }
 }
@@ -1016,6 +1015,8 @@ function drawEmojis() {
 }
 
 // ── 게임 루프 ──────────────────────────────────────────
+let hasShownGuide = false;
+
 function init() {
   syncCanvas();
   level = 1;
@@ -1035,6 +1036,77 @@ function init() {
   initFloor(); updateHUD(0,0);
   if(rafId) cancelAnimationFrame(rafId);
   loop();
+
+  if(!hasShownGuide) {
+    hasShownGuide = true;
+    showDragGuide();
+  }
+}
+
+function showDragGuide() {
+  const finger = document.createElement('div');
+  finger.className = 'drag-guide';
+  finger.textContent = '👆';
+  document.body.appendChild(finger);
+
+  // 창고 첫 번째 아이템 위치 → 그릴 중앙 위치
+  const shelfRect = floorShelf.getBoundingClientRect();
+  const sceneRect = scene.getBoundingClientRect();
+  const startX = shelfRect.left + shelfRect.width / 2;
+  const startY = shelfRect.top + 20;
+  const endX = sceneRect.left + sceneRect.width / 2;
+  const endY = sceneRect.top + sceneRect.height * 0.45;
+
+  finger.style.left = startX + 'px';
+  finger.style.top = startY + 'px';
+
+  let cycle = 0;
+  const maxCycles = 2;
+
+  function animate() {
+    // 페이드인 + 시작 위치
+    finger.style.transition = 'none';
+    finger.style.left = startX + 'px';
+    finger.style.top = startY + 'px';
+    finger.style.opacity = '0';
+    finger.style.transform = 'translate(-50%,-50%) scale(1)';
+
+    requestAnimationFrame(() => {
+      finger.style.transition = 'opacity 0.3s';
+      finger.style.opacity = '1';
+
+      // 드래그 모션 시작
+      setTimeout(() => {
+        finger.style.transition = 'left 1s ease-in-out, top 1s ease-in-out, transform 1s ease-in-out';
+        finger.style.left = endX + 'px';
+        finger.style.top = endY + 'px';
+        finger.style.transform = 'translate(-50%,-50%) scale(0.85)';
+
+        // 도착 후 페이드아웃
+        setTimeout(() => {
+          finger.style.transition = 'opacity 0.4s';
+          finger.style.opacity = '0';
+
+          setTimeout(() => {
+            cycle++;
+            if(cycle < maxCycles) animate();
+            else finger.remove();
+          }, 500);
+        }, 1100);
+      }, 400);
+    });
+  }
+
+  // 유저가 드래그하면 즉시 제거
+  const removeGuide = () => {
+    finger.remove();
+    document.removeEventListener('mousedown', removeGuide);
+    document.removeEventListener('touchstart', removeGuide);
+  };
+  document.addEventListener('mousedown', removeGuide);
+  document.addEventListener('touchstart', removeGuide);
+
+  setTimeout(animate, 500);
 }
 
 const SLIDE_THRESHOLD = 0.15; // 기울기 비율이 이 이상이면 미끄러지기 시작
@@ -1165,15 +1237,19 @@ function loop() {
     danger = Math.min(1, mag/TILT_LIMIT);
   } else {
     const {tx,ty} = computeTorque();
-    tiltX += (ty*4  - tiltX) * .08;
-    tiltY += (tx*6  - tiltY) * .08;
+    const targetX = ty*4, targetY = tx*6;
+    tiltX += (targetX - tiltX) * .08;
+    tiltY += (targetY - tiltY) * .08;
 
     const clX = Math.max(-TILT_LIMIT*1.1, Math.min(TILT_LIMIT*1.1, tiltX));
     const clY = Math.max(-TILT_LIMIT*1.1, Math.min(TILT_LIMIT*1.1, tiltY));
     trayGroup.style.transform = `rotateX(${-clX}deg) rotateY(${clY}deg)`;
 
     const mag = Math.sqrt(tiltX**2+tiltY**2);
-    danger = Math.min(1, mag/TILT_LIMIT);
+    const targetMag = Math.sqrt(targetX**2+targetY**2);
+    // 현재 기울기와 목표 기울기를 블렌딩하여 위험도 표시
+    const blended = mag * 0.4 + targetMag * 0.6;
+    danger = Math.min(1, blended/TILT_LIMIT);
 
     if(mag >= TILT_LIMIT){ gameOver(); return; }
 
@@ -1317,7 +1393,7 @@ function showGameOverScreen() {
     document.getElementById('goNickInput').value = '';
     document.getElementById('goEmailInput').value = '';
     document.getElementById('privacyAgree').checked = false;
-    document.getElementById('privacySection').classList.remove('show');
+    document.getElementById('privacySection').classList.add('show');
 
     const topTen = await isTopTen(finalScore);
     if(topTen && finalScore > 0) {
@@ -1449,13 +1525,18 @@ document.getElementById('goNickSave').addEventListener('click', async ()=>{
   if(!name) { alert('닉네임을 입력해주세요.'); input.focus(); return; }
   const emailInput = document.getElementById('goEmailInput');
   const email = emailInput.value.trim();
-  if(email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  if(!email) {
+    alert('이메일 주소를 입력해주세요.');
+    emailInput.focus();
+    return;
+  }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     alert('올바른 이메일 주소를 입력해주세요.');
     emailInput.focus();
     return;
   }
-  if(email && !document.getElementById('privacyAgree').checked) {
-    alert('이벤트에 참여하시려면 이메일 수집에 동의해주세요.');
+  if(!document.getElementById('privacyAgree').checked) {
+    alert('이벤트 참여를 위해 이메일 수집에 동의해주세요.');
     const checkLabel = document.querySelector('.privacy-check');
     checkLabel.classList.remove('highlight');
     void checkLabel.offsetHeight;
@@ -1471,9 +1552,7 @@ document.getElementById('goNickSave').addEventListener('click', async ()=>{
   const finalScore = parseInt(document.getElementById('goCount').textContent) || 0;
   await saveScore(name, finalScore, email);
 
-  if(email) {
-    document.getElementById('ytModal').classList.add('show');
-  }
+  document.getElementById('ytModal').classList.add('show');
 
   document.getElementById('goNickname').classList.remove('show');
 
@@ -1494,11 +1573,30 @@ document.getElementById('goEmailInput').addEventListener('keydown', (e)=>{
   if(e.key === 'Enter') document.getElementById('goNickSave').click();
 });
 document.getElementById('goEmailInput').addEventListener('input', (e)=>{
-  e.target.value = e.target.value.replace(/[^a-zA-Z0-9@._\-+]/g, '');
-  const section = document.getElementById('privacySection');
-  if(e.target.value.trim()) section.classList.add('show');
-  else { section.classList.remove('show'); document.getElementById('privacyAgree').checked = false; }
+  const before = e.target.value;
+  e.target.value = before.replace(/[^a-zA-Z0-9@._\-+]/g, '');
+  if(before !== e.target.value && /[ㄱ-ㅎㅏ-ㅣ가-힣]/.test(before)) {
+    showEmailTooltip('이메일주소는 한글입력이 불가합니다');
+  }
 });
+
+function showEmailTooltip(msg) {
+  let tip = document.getElementById('emailTooltip');
+  if(!tip) {
+    tip = document.createElement('div');
+    tip.id = 'emailTooltip';
+    tip.style.cssText = 'position:absolute;background:rgba(0,0,0,0.85);color:#ffffff;font-size:12px;padding:6px 12px;border-radius:6px;pointer-events:none;opacity:0;transition:opacity .2s;white-space:nowrap;z-index:9999;';
+    document.body.appendChild(tip);
+  }
+  const input = document.getElementById('goEmailInput');
+  const rect = input.getBoundingClientRect();
+  tip.textContent = msg;
+  tip.style.left = rect.left + rect.width / 2 - tip.offsetWidth / 2 + 'px';
+  tip.style.top = rect.bottom + 6 + 'px';
+  tip.style.opacity = '1';
+  clearTimeout(tip._timer);
+  tip._timer = setTimeout(() => { tip.style.opacity = '0'; }, 1500);
+}
 
 // 건너뛰기 (저장 않고 랭킹만 보기)
 document.getElementById('goNickSkip').addEventListener('click', async ()=>{

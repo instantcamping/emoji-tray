@@ -318,7 +318,7 @@
       <input type="text" id="goNickInput" maxlength="8" placeholder="유튜브 닉네임(@핸들명)" autocomplete="off">
     </div>
     <div class="go-nickname-row">
-      <input type="email" id="goEmailInput" placeholder="이메일 주소(선택)" autocomplete="off">
+      <input type="email" id="goEmailInput" placeholder="이메일 주소" autocomplete="off">
     </div>
     <div class="privacy-section" id="privacySection">
       <div class="privacy-box">
@@ -327,7 +327,6 @@
           <p><strong>1. 수집 항목:</strong> 이메일 주소</p>
           <p><strong>2. 수집 목적:</strong> 이벤트 경품 발송 (랭킹정보에는 노출되지 않습니다)</p>
           <p><strong>3. 보유 기간:</strong> 경품 발송 후 파기</p>
-          <p><strong>4. 동의 거부 권리:</strong> 이메일은 선택사항이며 닉네임만으로 랭킹 등록이 가능합니다.</p>
         </div>
         <label class="privacy-check">
           <input type="checkbox" id="privacyAgree">
@@ -353,9 +352,9 @@
 <div class="custom-modal-bg" id="ytModal">
   <div class="custom-modal">
     <div class="custom-modal-icon">📢</div>
-    <div class="custom-modal-msg">유튜브 영상에 댓글을 작성하시면<br>이벤트 참여가 완료됩니다!</div>
-    <a class="custom-modal-link" id="ytModalLink" href="http://naver.com" target="_blank">👉 영상으로 이동하기</a>
-    <button class="custom-modal-close" id="ytModalClose">닫기</button>
+    <div class="custom-modal-msg">동일한 닉네임으로<br>유튜브 영상에 <strong>댓글을 작성</strong>하시면<br>이벤트 참여가 완료됩니다!</div>
+    <a class="yt-btn primary" id="ytModalLink" href="http://naver.com" target="_blank">👉 영상 시청하기</a>
+    <button class="yt-btn secondary" id="ytModalClose">🏆 랭킹 확인하기</button>
   </div>
 </div>
 
