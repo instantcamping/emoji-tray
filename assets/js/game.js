@@ -1,3 +1,45 @@
+// ── 사운드 ─────────────────────────────────────────────
+const SFX = {
+  bgm:        new Audio('assets/sounds/bgm.mp3'),
+  put:        new Audio('assets/sounds/put.mp3'),
+  drop:       new Audio('assets/sounds/drop.mp3'),
+  levelup:    new Audio('assets/sounds/levelup.mp3'),
+  winner:     new Audio('assets/sounds/winner.mp3'),
+  end:        new Audio('assets/sounds/end.mp3'),
+  start:      new Audio('assets/sounds/start.mp3'),
+  item:       new Audio('assets/sounds/item.mp3'),
+  goldentime: new Audio('assets/sounds/goldentime.mp3'),
+};
+SFX.bgm.loop = true;
+SFX.bgm.volume = 0.5;
+SFX.goldentime.loop = true;
+SFX.goldentime.volume = 0.5;
+SFX.put.volume = 0.7;
+SFX.drop.volume = 0.8;
+SFX.start.volume = 0.8;
+SFX.item.volume = 0.8;
+SFX.levelup.volume = 0.8;
+SFX.winner.volume = 0.8;
+SFX.end.volume = 0.8;
+
+let soundMuted = false;
+
+function setMute(muted) {
+  soundMuted = muted;
+  Object.values(SFX).forEach(s => s.muted = muted);
+  const btn = document.getElementById('soundToggleBtn');
+  if(btn) btn.textContent = muted ? '🔇' : '🔊';
+  if(!muted && running && SFX.bgm.paused && !goldenTime) {
+    resumeBGM();
+  }
+}
+
+function playBGM()  { SFX.bgm.currentTime = 0; SFX.bgm.play().catch(()=>{}); }
+function pauseBGM() { SFX.bgm.pause(); }
+function resumeBGM(){ SFX.bgm.play().catch(()=>{}); }
+function stopBGM()  { SFX.bgm.pause(); SFX.bgm.currentTime = 0; }
+function playSFX(key) { const s = SFX[key]; if(!s || soundMuted) return; s.currentTime = 0; s.play().catch(()=>{}); }
+
 // ── 이모지 데이터 ──────────────────────────────────────
 const EMOJI_DATA = [
   // 100점 (w:0.1) - 가볍지만 고점수 2개
@@ -253,10 +295,9 @@ function randED() {
 
 function addFloorItem() {
   let d = randED();
-  // 같은 이모지 2개까지만 허용 (최대 10회 재시도)
-  for(let retry = 0; retry < 10; retry++) {
-    const count = floorItems.filter(f => f.e === d.e).length;
-    if(count < 2) break;
+  // 같은 이모지 중복 불허 (최대 15회 재시도)
+  for(let retry = 0; retry < 15; retry++) {
+    if(!floorItems.some(f => f.e === d.e)) break;
     d = randED();
   }
   const id = nextId++;
@@ -408,6 +449,7 @@ function tryDrop(cx,cy) {
   items.push({sx:sv.x, sy:sv.y, e:dragging.data.e, w:dragging.data.w, dropT:performance.now()});
   score += dropPts;
   removeFloorItem(dragging.sourceEl);
+  playSFX('put');
   spawnDropBurst(cx, cy);
   spawnScoreStars(cx, cy, dropPts);
   return true;
@@ -473,6 +515,7 @@ function spawnMysteryBurst(cx, cy) {
 
 // ── 폭탄 폭발 효과: 모든 이모지 제거 + 구름 ─────────────
 function bombExplode() {
+  playSFX('item');
   const sceneRect = scene.getBoundingClientRect();
   // 쟁반 시각적 중앙 화면 좌표 (SVG 타원 중심 보정)
   const center = svgToScene(TRAY_CX - 20, TRAY_CY - 30);
@@ -544,6 +587,7 @@ const ICE_DURATION = 5000;
 let frostFlakes = [];
 
 function iceFreeze(screenCx, screenCy) {
+  playSFX('item');
   // 이미 동결 중이면 타이머 리셋 & 기존 눈꽃 제거
   if(frozenTimer) clearTimeout(frozenTimer);
   clearFrostFlakes();
@@ -622,6 +666,7 @@ function spawnIceBurst(cx, cy) {
 
 // ── 자석 끌어당기기 효과 ──────────────────────────────────
 function magnetPull(targetSx, targetSy, screenCx, screenCy) {
+  playSFX('item');
   if(items.length === 0) return;
 
   // 자석 이펙트
@@ -671,7 +716,7 @@ function spawnMagnetBurst(cx, cy) {
 }
 
 // ── 별 골든타임: 쟁반 위 이모지를 별로 변환, 클릭하면 10점 ─────
-const GOLDEN_DURATION = 10000;
+const GOLDEN_DURATION = 5000;
 
 let goldenCountdownActive = false;
 
@@ -695,9 +740,13 @@ function starGoldenTime(screenCx, screenCy) {
   lastDropTime = performance.now();
 
   // 3초 카운트다운 후 골든타임 시작
+  playSFX('item');
   showGoldenCountdown(() => {
     if(!running) return;
     goldenTime = true;
+    pauseBGM();
+    playSFX('goldentime');
+    startGoldenCounter();
 
     // 쟁반 위 이모지를 전부 별로 변환 (20% 확률로 🌟 100점)
     items.forEach(it => {
@@ -732,9 +781,33 @@ function starGoldenTime(screenCx, screenCy) {
   });
 }
 
+let goldenCounterInterval = null;
+
+function startGoldenCounter() {
+  const bar = document.getElementById('goldenCounterBar');
+  const txt = document.getElementById('goldenCounterText');
+  let sec = Math.round(GOLDEN_DURATION / 1000);
+  txt.textContent = sec;
+  bar.classList.add('active');
+  if(goldenCounterInterval) clearInterval(goldenCounterInterval);
+  goldenCounterInterval = setInterval(() => {
+    sec--;
+    txt.textContent = Math.max(sec, 0);
+    if(sec <= 0) { clearInterval(goldenCounterInterval); goldenCounterInterval = null; }
+  }, 1000);
+}
+
+function stopGoldenCounter() {
+  if(goldenCounterInterval) { clearInterval(goldenCounterInterval); goldenCounterInterval = null; }
+  document.getElementById('goldenCounterBar').classList.remove('active');
+}
+
 function endGoldenTime() {
   goldenTime = false;
   goldenTimer = null;
+  stopGoldenCounter();
+  SFX.goldentime.loop = false;
+  resumeBGM();
   floorShelf.classList.remove('golden-time');
   dropHighlight.setAttribute('opacity', '0');
   dropHighlight.setAttribute('stroke', 'rgba(255,140,66,0)');
@@ -817,6 +890,16 @@ function hideGoldenShelfOverlay() {
 }
 
 // 쟁반 위 골든 별 클릭 수확 (기울기 0 상태에서 SVG 좌표 직접 비교)
+function spawnGoldenScorePop(cx, cy, pts) {
+  const el = document.createElement('div');
+  el.className = 'golden-score-pop';
+  el.textContent = '+' + pts;
+  el.style.left = cx + 'px';
+  el.style.top  = cy + 'px';
+  document.body.appendChild(el);
+  el.addEventListener('animationend', () => el.remove());
+}
+
 function harvestGoldenStar(cx, cy) {
   if(!goldenTime || !running) return false;
   const sv = clientToSvg(cx, cy);
@@ -845,6 +928,7 @@ function harvestGoldenStar(cx, cy) {
   // 이펙트
   spawnDropBurst(cx, cy);
   spawnScoreStars(cx, cy, pts);
+  spawnGoldenScorePop(cx, cy, pts);
 
   // 모든 골든 별이 수확되면 조기 종료
   if(!items.some(it => it.golden)) {
@@ -1035,6 +1119,7 @@ function init() {
   trayGroup.style.transform='';
   initFloor(); updateHUD(0,0);
   if(rafId) cancelAnimationFrame(rafId);
+  playBGM();
   loop();
 
   if(!hasShownGuide) {
@@ -1333,6 +1418,7 @@ function levelClear() {
   document.getElementById('lcSub').textContent = '현재 점수: ' + score + '점';
   lcOverlay.classList.add('show');
   document.body.classList.add('no-scroll');
+  playSFX('levelup');
   spawnConfetti();
 
   let countdown = 3;
@@ -1380,7 +1466,7 @@ function showGameOverScreen() {
     const goCount = document.getElementById('goCount');
     const goBest = document.getElementById('goBest');
     const goSubTitle = document.getElementById('goSubTitle');
-    const lvlText = level >= LEVELS.length ? 'Level MAX' : 'Level ' + level;
+    const lvlText = level >= LEVELS.length ? 'MAX' : String(level);
     if(goLevelBadge) goLevelBadge.textContent = lvlText;
     if(goCount) goCount.textContent = finalScore;
     if(goBest) goBest.textContent = best;
@@ -1404,6 +1490,7 @@ function showGameOverScreen() {
       nickArea.classList.add('show');
       retryBtn.style.display = 'none';
       spawnConfetti();
+      playSFX('winner');
       document.getElementById('goNickInput').focus();
     } else {
       document.querySelector('.go-emoji').textContent = '🔥';
@@ -1413,6 +1500,7 @@ function showGameOverScreen() {
       renderLeaderboard(board, finalScore, '');
       lbArea.classList.add('show');
       retryBtn.style.display = '';
+      playSFX('end');
     }
     goOverlay.classList.add('show');
     document.body.classList.add('no-scroll');
@@ -1422,6 +1510,8 @@ function showGameOverScreen() {
 // ── 게임오버 ───────────────────────────────────────────
 function gameOver() {
   running=false; cancelAnimationFrame(rafId);
+  stopBGM();
+  playSFX('drop');
   countdownTimer.classList.remove('active');
 
   // 1. 캔버스의 이모지를 즉시 지움 (쟁반 위 이모지 제거)
@@ -1435,7 +1525,6 @@ function gameOver() {
   //    기울기 방향으로 초기 속도 부여
   const sceneRect = scene.getBoundingClientRect();
   const flipDirX = tiltY > 0 ? 1 : -1; // rotateY → 좌우 방향
-  const flipDirY = tiltX > 0 ? 1 : -1; // rotateX → 앞뒤 방향
 
   items.forEach((it, idx) => {
     // 씬 픽셀 위치 계산
@@ -1516,7 +1605,11 @@ dropZone.addEventListener('touchend', e => {
 });
 
 // ── 이벤트 ─────────────────────────────────────────────
-document.getElementById('startBtn').addEventListener('click', init);
+document.getElementById('startBtn').addEventListener('click', () => { playSFX('start'); init(); });
+
+document.getElementById('soundToggleBtn').addEventListener('click', () => {
+  setMute(!soundMuted);
+});
 
 // 닉네임 저장
 document.getElementById('goNickSave').addEventListener('click', async ()=>{
@@ -1545,24 +1638,10 @@ document.getElementById('goNickSave').addEventListener('click', async ()=>{
     return;
   }
 
-  const btn = document.getElementById('goNickSave');
-  btn.textContent = '저장 중...';
-  btn.disabled = true;
-
-  const finalScore = parseInt(document.getElementById('goCount').textContent) || 0;
-  await saveScore(name, finalScore, email);
-
-  document.getElementById('ytModal').classList.add('show');
-
-  document.getElementById('goNickname').classList.remove('show');
-
-  const board = await loadLeaderboard();
-  renderLeaderboard(board, finalScore, name);
-  document.getElementById('goLeaderboard').classList.add('show');
-  document.getElementById('retryBtn').style.display = '';
-
-  btn.textContent = '저장';
-  btn.disabled = false;
+  // 확인 팝업 표시
+  document.getElementById('confirmNick').textContent = name;
+  document.getElementById('confirmEmail').textContent = email;
+  document.getElementById('confirmModal').classList.add('show');
 });
 
 // Enter 키로도 저장
@@ -1619,10 +1698,36 @@ document.querySelectorAll('.custom-modal-bg').forEach(bg=>{
   });
 });
 // 유튜브 모달 닫기
-document.getElementById('ytModalClose').addEventListener('click', ()=>{
-  document.getElementById('ytModal').classList.remove('show');
-});
 // 게임방법 / 특수이모지 팝업
+document.getElementById('confirmCancel').addEventListener('click', ()=>{
+  document.getElementById('confirmModal').classList.remove('show');
+});
+
+document.getElementById('confirmOk').addEventListener('click', async ()=>{
+  document.getElementById('confirmModal').classList.remove('show');
+
+  const name  = document.getElementById('goNickInput').value.trim();
+  const email = document.getElementById('goEmailInput').value.trim();
+  const finalScore = parseInt(document.getElementById('goCount').textContent) || 0;
+
+  const btn = document.getElementById('goNickSave');
+  btn.textContent = '저장 중...';
+  btn.disabled = true;
+
+  await saveScore(name, finalScore, email);
+
+  document.getElementById('confirmModal').classList.remove('show');
+  document.getElementById('goNickname').classList.remove('show');
+
+  const board = await loadLeaderboard();
+  renderLeaderboard(board, finalScore, name);
+  document.getElementById('goLeaderboard').classList.add('show');
+  document.getElementById('retryBtn').style.display = '';
+
+  btn.textContent = '저장';
+  btn.disabled = false;
+});
+
 document.getElementById('howToPlayBtn').addEventListener('click', ()=>{
   document.getElementById('howToPlayModal').classList.add('show');
 });
@@ -1637,6 +1742,7 @@ document.getElementById('retryBtn').addEventListener('click', ()=>{
   document.getElementById('goNickname').classList.remove('show');
   document.getElementById('goLeaderboard').classList.remove('show');
   document.getElementById('retryBtn').style.display = '';
+  playSFX('start');
   init();
 });
 window.addEventListener('resize', ()=>{ if(running) syncCanvas(); });
