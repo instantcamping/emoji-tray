@@ -1482,16 +1482,21 @@ function showGameOverScreen() {
     document.getElementById('privacySection').classList.add('show');
 
     const topTen = await isTopTen(finalScore);
+    const isEventEnded = new Date() > new Date('2026-04-03T23:59:59');
     if(topTen && finalScore > 0) {
       document.querySelector('.go-emoji').textContent = '🎉';
       document.querySelector('.go-title').textContent = '축하합니다!';
       if(goSubTitle) goSubTitle.textContent = '';
-      document.getElementById('goNickSub').textContent = 'TOP 10 순위권에 진입했어요!';
-      nickArea.classList.add('show');
-      retryBtn.style.display = 'none';
       spawnConfetti();
       playSFX('winner');
-      document.getElementById('goNickInput').focus();
+      retryBtn.style.display = 'none';
+      if(isEventEnded) {
+        document.getElementById('goEventEnded').classList.add('show');
+      } else {
+        document.getElementById('goNickSub').textContent = 'TOP 10 순위권에 진입했어요!';
+        nickArea.classList.add('show');
+        document.getElementById('goNickInput').focus();
+      }
     } else {
       document.querySelector('.go-emoji').textContent = '🔥';
       document.querySelector('.go-title').textContent = '그릴이 뒤집어졌다!';
@@ -1686,6 +1691,15 @@ document.getElementById('goNickSkip').addEventListener('click', async ()=>{
   document.getElementById('retryBtn').style.display = '';
 });
 
+// 이벤트 종료 팝업 - 랭킹 보기
+document.getElementById('goEventEndedClose').addEventListener('click', async ()=>{
+  document.getElementById('goEventEnded').classList.remove('show');
+  const board = await loadLeaderboard();
+  renderLeaderboard(board, 0, '');
+  document.getElementById('goLeaderboard').classList.add('show');
+  document.getElementById('retryBtn').style.display = '';
+});
+
 // 모달 닫기 (공통: 닫기버튼 + 배경 클릭)
 document.querySelectorAll('.custom-modal-close[data-close]').forEach(btn=>{
   btn.addEventListener('click', ()=>{
@@ -1740,6 +1754,7 @@ document.getElementById('retryBtn').addEventListener('click', ()=>{
   document.querySelectorAll('.falling-emoji').forEach(el=>el.remove());
   // 랭킹 UI 초기화
   document.getElementById('goNickname').classList.remove('show');
+  document.getElementById('goEventEnded').classList.remove('show');
   document.getElementById('goLeaderboard').classList.remove('show');
   document.getElementById('retryBtn').style.display = '';
   playSFX('start');
