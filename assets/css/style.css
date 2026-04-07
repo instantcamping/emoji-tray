@@ -411,24 +411,17 @@ h1 { font-family:'Gaegu',cursive; font-size:clamp(1.6rem,3.5vw,2.4rem); color:va
 /* 시작 오버레이 - main-area 전체를 덮음 */
 .start-overlay {
   position:absolute; left:0; right:0; top:0; min-height:100vh;
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
   background:radial-gradient(ellipse at 50% 40%, rgba(0,0,0,.85), rgba(0,0,0,.5));
-  border-radius:20px; gap:.6rem; padding:1.5rem 1rem;
+  border-radius:20px; gap:.6rem; padding:1.5rem 1rem 100px;
   backdrop-filter:blur(6px); z-index:30;
   border:1px solid rgba(255,140,66,.15);
   box-shadow:inset 0 0 80px rgba(255,140,66,.05), 0 0 40px rgba(0,0,0,.5);
 }
-/* 이벤트 리본 (좌측 상단 대각선 띠) */
-.event-ribbon {
-  position:absolute; top:34px; left:-50px; z-index:31;
-  width:210px; text-align:center;
-  padding:6px 0;
-  background:linear-gradient(135deg,#E84040,#c0282e);
-  color:#fff; font-family:'Noto Sans KR',sans-serif;
-  font-size:.7rem; font-weight:700; letter-spacing:.08em;
-  transform:rotate(-45deg);
-  box-shadow:0 3px 10px rgba(232,64,64,.5);
-  text-shadow:0 1px 2px rgba(0,0,0,.4);
+#startBtn {
+  position:fixed; bottom:1.5rem; left:50%; transform:translateX(-50%);
+  z-index:31; width:calc(100% - 3rem); max-width:500px;
+  margin-top:0;
 }
 
 .start-overlay-emoji {
@@ -449,27 +442,23 @@ h1 { font-family:'Gaegu',cursive; font-size:clamp(1.6rem,3.5vw,2.4rem); color:va
   font-size:clamp(.9rem,1.8vw,1.15rem); color:var(--muted); text-align:center;
   padding:0 1.5rem; line-height:1.5;
 }
-/* 게임방법/특수이모지 버튼 */
-.info-btns {
-  display:flex; gap:8px; width:100%; max-width:340px;
-  margin-top:20px;
-}
-.info-btn {
-  flex:1; padding:10px 0;
-  background:rgba(255,255,255,.06); border:1.5px solid rgba(255,255,255,.15);
-  border-radius:12px; color:rgba(255,200,100,.9);
-  font-family:'Gaegu',cursive; font-size:clamp(.95rem,1.8vw,1.15rem); font-weight:700;
-  cursor:pointer; transition:transform .15s, background .2s, border-color .2s;
-  letter-spacing:.03em;
-}
-.info-btn:hover { background:rgba(255,140,66,.12); border-color:rgba(255,140,66,.4); transform:scale(1.04); }
-.info-btn:active { transform:scale(.95); }
 
 /* 모달 내 제목 */
 .custom-modal-title {
   font-family:'Gaegu',cursive; font-size:clamp(1.3rem,3vw,1.7rem);
   color:var(--accent); font-weight:700; margin-bottom:14px;
   text-shadow:0 0 12px rgba(255,140,66,.3);
+}
+
+/* 인라인 정보 섹션 */
+.info-section {
+  width:100%; max-width:340px;
+  background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1);
+  border-radius:14px; padding:12px 14px;
+}
+.info-section-title {
+  font-family:'Gaegu',cursive; font-size:clamp(1rem,2vw,1.15rem);
+  color:var(--accent); font-weight:700; margin-bottom:8px;
 }
 
 /* 모달 내 아이템 리스트 */
@@ -483,58 +472,6 @@ h1 { font-family:'Gaegu',cursive; font-size:clamp(1.6rem,3.5vw,2.4rem); color:va
 .start-special-icon { font-size:1.3rem; flex-shrink:0; width:28px; text-align:center; }
 .start-special-desc { line-height:1.4; }
 
-/* 이벤트 배너 */
-.event-banner {
-  width:100%; max-width:340px;
-  background:linear-gradient(135deg, rgba(255,140,66,.08), rgba(255,215,0,.06));
-  border:1.5px solid rgba(255,140,66,.35);
-  border-radius:16px; padding:14px 18px;
-  text-align:center;
-  box-shadow:0 0 20px rgba(255,140,66,.1), inset 0 0 30px rgba(255,140,66,.03);
-}
-.event-period {
-  display:inline-flex; align-items:center; gap:6px;
-  font-size:clamp(.72rem,1.2vw,.85rem); color:var(--muted);
-  background:rgba(255,255,255,.06); border-radius:20px;
-  padding:3px 12px; margin-bottom:8px;
-}
-.event-period-icon { font-size:.9rem; }
-.event-title {
-  font-family:'Gaegu',cursive; font-size:clamp(1.2rem,2.8vw,1.6rem);
-  color:var(--accent); font-weight:700; margin-bottom:10px;
-  text-shadow:0 0 12px rgba(255,140,66,.3);
-}
-.event-steps {
-  display:flex; flex-direction:column; gap:8px;
-  text-align:left; margin-bottom:12px;
-}
-.event-step {
-  display:flex; align-items:center; gap:10px;
-  font-size:clamp(.78rem,1.3vw,.88rem); color:rgba(255,255,255,.95);
-  line-height:1.4;
-  background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1);
-  border-radius:10px; padding:10px 12px;
-  transition:background .2s;
-}
-.event-step:hover { background:rgba(255,140,66,.1); }
-.event-step-num {
-  flex-shrink:0; width:26px; height:26px;
-  display:flex; align-items:center; justify-content:center;
-  background:linear-gradient(135deg,#FF8C42,#d4691a); color:#0d1a0f;
-  border-radius:50%; font-size:.75rem; font-weight:700;
-  font-family:'Orbitron',sans-serif;
-  box-shadow:0 2px 8px rgba(255,140,66,.35);
-}
-.event-prize {
-  font-size:clamp(.85rem,1.5vw,1rem); color:#FFD700;
-  font-weight:700; letter-spacing:.03em;
-  text-shadow:0 0 10px rgba(255,215,0,.3);
-  margin-bottom:6px;
-}
-.event-announce {
-  font-size:clamp(.7rem,1.1vw,.8rem); color:rgba(255,255,255,.5);
-  letter-spacing:.02em;
-}
 
 .btn {
   margin-top:.6rem; padding:.9rem 3rem; background:linear-gradient(180deg,#FF8C42,#d4691a); color:#0d1a0f;
@@ -910,75 +847,6 @@ h1 { font-family:'Gaegu',cursive; font-size:clamp(1.6rem,3.5vw,2.4rem); color:va
   cursor:pointer; transition:border-color .2s;
 }
 .custom-modal-close:hover { border-color:rgba(255,255,255,.4); }
-/* 확인 팝업 */
-.confirm-modal { padding:24px 24px 20px; }
-.confirm-header {
-  display:flex; flex-direction: column; align-items:center; gap:8px;
-  margin-bottom:16px;
-}
-.confirm-header-icon { font-size:1.3rem; line-height:1; }
-.confirm-header-title {
-  font-family:'Noto Sans KR',sans-serif; font-size:1.2rem; font-weight:700;
-  color:#fff; letter-spacing:-.01em;
-}
-.confirm-info {
-  background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1);
-  border-radius:12px; padding:12px 14px; margin-bottom:16px; text-align:left;
-}
-.confirm-row { display:flex; align-items:baseline; gap:10px; padding:5px 0; }
-.confirm-row + .confirm-row { border-top:1px solid rgba(255,255,255,.07); }
-.confirm-label {
-  font-family:'Noto Sans KR',sans-serif; font-size:.75rem;
-  color:rgba(255,255,255,.45); min-width:42px; flex-shrink:0;
-}
-.confirm-value {
-  font-family:'Noto Sans KR',sans-serif; font-size:.9rem;
-  color:#fff; font-weight:700; word-break:break-all;
-}
-.confirm-email-group { display:flex; flex-direction:column; gap:3px; }
-.confirm-email-note {
-  font-family:'Noto Sans KR',sans-serif; font-size:.68rem;
-  color:rgba(255,180,80,.75); line-height:1;
-}
-.confirm-action-row { display:flex; gap:8px; margin-bottom:12px; }
-.confirm-cancel-btn { flex:2; font-size:.82rem; padding:10px 0; }
-.confirm-ok-btn { flex:3; }
-.confirm-yt-wrap {
-  border-top:1px solid rgba(255,255,255,.08);
-  padding-top:12px;
-}
-.confirm-yt-link {
-  display:block; width:100%; padding:8px 0; text-align:center;
-  background:transparent; border:1px solid rgba(255,255,255,.18);
-  border-radius:8px; color:rgba(255,255,255,.6);
-  font-family:'Noto Sans KR',sans-serif; font-size:.82rem; font-weight:600;
-  text-decoration:none; transition:border-color .2s, color .2s;
-}
-.confirm-yt-link:hover { border-color:rgba(255,255,255,.4); color:#fff; }
-.yt-note {
-  font-family:'Noto Sans KR',sans-serif; font-size:.68rem;
-  color:rgba(255,255,255,.45); margin-top:7px; line-height:1.5; text-align:center;
-}
-.yt-note-em { color:#FF8C42; font-weight:700; }
-.yt-btn {
-  display:block; width:80%; max-width:260px; margin:8px auto 0; padding:12px 0;
-  border:none; border-radius:12px; font-family:'Gaegu',cursive; font-size:clamp(1.1rem,2.2vw,1.35rem);
-  font-weight:700; text-align:center; text-decoration:none; letter-spacing:.03em;
-  cursor:pointer; transition:transform .15s,box-shadow .15s;
-}
-.yt-btn:hover { transform:scale(1.05); }
-.yt-btn:active { transform:scale(.95); }
-.yt-btn.primary {
-  background:linear-gradient(180deg,#FF8C42,#d4691a); color:#0d1a0f;
-  box-shadow:0 4px 16px rgba(255,140,66,.4);
-}
-.yt-btn.primary:hover { box-shadow:0 6px 24px rgba(255,140,66,.6); }
-.yt-btn.secondary {
-  background:linear-gradient(180deg,#4a4a4a,#2a2a2a); color:#fff;
-  box-shadow:0 4px 12px rgba(0,0,0,.3);
-}
-.yt-btn.secondary:hover { box-shadow:0 6px 18px rgba(0,0,0,.4); }
-
 /* 사운드 토글 버튼 */
 #soundToggleBtn {
   position:fixed; top:14px; right:14px; z-index:10100;

@@ -231,65 +231,34 @@
 
 <!-- 시작 오버레이 (main-area 전체 덮음) -->
 <div class="start-overlay" id="startOverlay">
-  <div class="event-ribbon">인스턴트캠핑 이벤트</div>
   <div class="start-overlay-emoji">🏕️</div>
   <div class="start-overlay-title">캠핑 그릴 게임</div>
   <div class="start-overlay-sub">재료를 드래그해서 그릴 위에 올려보세요!</div>
 
-  <!-- 이벤트 안내 -->
-  <div class="event-banner">
-    <div class="event-period">
-      <span class="event-period-icon">📅</span>
-      <span>2026.03.28(토) ~ 2026.04.03(금)</span>
-    </div>
-    <div class="event-title">이벤트 참여방법</div>
-    <div class="event-steps">
-      <div class="event-step"><span class="event-step-num">1</span><span>게임 플레이 후 랭킹 TOP 10 달성</span></div>
-      <div class="event-step"><span class="event-step-num">2</span><span>유튜브 닉네임과 이메일주소 입력</span></div>
-      <div class="event-step"><span class="event-step-num">3</span><span>참여한 닉네임으로 영상에 댓글남기기</span></div>
-    </div>
-    <div class="event-prize">🎁 랭킹 참여자 경품 지급!</div>
-    <div class="event-announce">📢 당첨자 발표: 04.05(일) 커뮤니티 게시</div>
-  </div>
-
-  <button class="btn" id="startBtn">게임 시작</button>
-
-  <div class="info-btns">
-    <button class="info-btn" id="howToPlayBtn">게임 방법</button>
-    <button class="info-btn" id="specialInfoBtn">특수 이모지</button>
-  </div>
-
-  <!-- 게임 방법 팝업 -->
-  <div class="custom-modal-bg" id="howToPlayModal">
-    <div class="custom-modal">
-      <div class="custom-modal-icon">📖</div>
-      <div class="custom-modal-title">게임 방법</div>
-      <div class="start-special-list">
-        <div class="start-special-item"><span class="start-special-icon">👆</span><span class="start-special-desc">재료를 드래그해서 그릴 위에 올리기</span></div>
-        <div class="start-special-item"><span class="start-special-icon">🔥</span><span class="start-special-desc">재료가 떨어지면 게임 오버</span></div>
-        <div class="start-special-item"><span class="start-special-icon">🏆</span><span class="start-special-desc">높은 점수로 TOP 10 랭커에 올라가기</span></div>
-      </div>
-      <button class="custom-modal-close" data-close="howToPlayModal">닫기</button>
+  <!-- 게임 방법 -->
+  <div class="info-section">
+    <div class="info-section-title">📖 게임 방법</div>
+    <div class="start-special-list">
+      <div class="start-special-item"><span class="start-special-icon">👆</span><span class="start-special-desc">재료를 드래그해서 그릴 위에 올리기</span></div>
+      <div class="start-special-item"><span class="start-special-icon">🔥</span><span class="start-special-desc">재료가 떨어지면 게임 오버</span></div>
+      <div class="start-special-item"><span class="start-special-icon">🏆</span><span class="start-special-desc">높은 점수로 TOP 10 랭커에 올라가기</span></div>
     </div>
   </div>
 
-  <!-- 특수 이모지 팝업 -->
-  <div class="custom-modal-bg" id="specialInfoModal">
-    <div class="custom-modal">
-      <div class="custom-modal-icon">✨</div>
-      <div class="custom-modal-title">특수 이모지 설명</div>
-      <div class="start-special-list">
-        <div class="start-special-item"><span class="start-special-icon">💣</span><span class="start-special-desc">폭탄 — 그릴 위 재료 전부 제거</span></div>
-        <div class="start-special-item"><span class="start-special-icon">🧊</span><span class="start-special-desc">얼음 — 기울기 잠시 동결</span></div>
-        <div class="start-special-item"><span class="start-special-icon">🧲</span><span class="start-special-desc">자석 — 주변 재료를 끌어당김</span></div>
-        <div class="start-special-item"><span class="start-special-icon">⭐</span><span class="start-special-desc">별 — 그릴 위 별을 클릭하면 높은점수 획득</span></div>
-        <div class="start-special-item"><span class="start-special-icon">❓</span><span class="start-special-desc">랜덤박스 — 특수효과가 랜덤 발동!</span></div>
-      </div>
-      <button class="custom-modal-close" data-close="specialInfoModal">닫기</button>
+  <!-- 특수 이모지 -->
+  <div class="info-section">
+    <div class="info-section-title">✨ 특수 이모지</div>
+    <div class="start-special-list">
+      <div class="start-special-item"><span class="start-special-icon">💣</span><span class="start-special-desc">폭탄 — 그릴 위 재료 전부 제거</span></div>
+      <div class="start-special-item"><span class="start-special-icon">🧊</span><span class="start-special-desc">얼음 — 기울기 잠시 동결</span></div>
+      <div class="start-special-item"><span class="start-special-icon">🧲</span><span class="start-special-desc">자석 — 주변 재료를 끌어당김</span></div>
+      <div class="start-special-item"><span class="start-special-icon">⭐</span><span class="start-special-desc">별 — 그릴 위 별을 클릭하면 높은점수 획득</span></div>
+      <div class="start-special-item"><span class="start-special-icon">❓</span><span class="start-special-desc">랜덤박스 — 특수효과가 랜덤 발동!</span></div>
     </div>
   </div>
-  
+
 </div>
+<button class="btn" id="startBtn">게임 시작</button>
 
 
 <!-- 레벨 클리어 -->
@@ -320,24 +289,7 @@
     <div class="go-nickname-sub" id="goNickSub"></div>
     <div class="go-nickname-title">랭킹 정보를 입력해주세요.</div>
     <div class="go-nickname-row">
-      <input type="text" id="goNickInput" maxlength="8" placeholder="유튜브 닉네임(@핸들명)" autocomplete="off">
-    </div>
-    <div class="go-nickname-row">
-      <input type="email" id="goEmailInput" placeholder="이메일 주소(비공개)" autocomplete="off">
-    </div>
-    <div class="privacy-section" id="privacySection">
-      <div class="privacy-box">
-        <div class="privacy-title">이메일 수집 동의</div>
-        <div class="privacy-content">
-          <p><strong>1. 수집 항목:</strong> 이메일 주소</p>
-          <p><strong>2. 수집 목적:</strong> 이벤트 경품 발송 (랭킹정보에 노출되지 않습니다)</p>
-          <p><strong>3. 보유 기간:</strong> 경품 발송 후 파기</p>
-        </div>
-        <label class="privacy-check">
-          <input type="checkbox" id="privacyAgree">
-          <span>동의합니다.</span>
-        </label>
-      </div>
+      <input type="text" id="goNickInput" maxlength="8" placeholder="닉네임" autocomplete="off">
     </div>
     <div class="go-nickname-row">
       <button class="btn-save" id="goNickSave">저장</button>
@@ -345,16 +297,8 @@
     </div>
   </div>
 
-  <!-- 이벤트 종료 팝업 -->
-  <div class="go-nickname" id="goEventEnded">
-    <div class="go-nickname-trophy">🏆</div>
-    <div class="go-nickname-title">이벤트가 종료되었습니다.</div>
-    <div class="go-nickname-row" style="margin-top:8px;">
-      <button class="btn-skip" id="goEventEndedClose">랭킹 보기</button>
-    </div>
-  </div>
 
-  <button class="btn" id="retryBtn">다시 도전</button>
+<button class="btn" id="retryBtn">다시 도전</button>
 
   <!-- 랭킹 보드 -->
   <div class="go-leaderboard" id="goLeaderboard">
@@ -363,35 +307,6 @@
 </div>
 
 <!-- 등록 확인/완료 팝업 -->
-<div class="custom-modal-bg" id="confirmModal">
-  <div class="custom-modal confirm-modal">
-    <div class="confirm-header">
-      <span class="confirm-header-icon">⚠️</span>
-      <span class="confirm-header-title">아래 정보로 참여하시겠습니까?</span>
-    </div>
-    <div class="confirm-info">
-      <div class="confirm-row">
-        <span class="confirm-label">닉네임</span>
-        <span class="confirm-value" id="confirmNick"></span>
-      </div>
-      <div class="confirm-row confirm-row-email">
-        <span class="confirm-label">이메일</span>
-        <span class="confirm-email-group">
-          <span class="confirm-value" id="confirmEmail"></span>
-          <span class="confirm-email-note">(경품 발송 전용 · 랭킹 노출안됨)</span>
-        </span>
-      </div>
-    </div>
-    <div class="confirm-action-row">
-      <button class="yt-btn secondary confirm-cancel-btn" id="confirmCancel">다시 입력</button>
-      <button class="yt-btn primary confirm-ok-btn" id="confirmOk">등록하기</button>
-    </div>
-    <div class="confirm-yt-wrap">
-      <a class="confirm-yt-link" id="ytModalLink" href="https://youtu.be/6MlRT196JwY" target="_blank">👉 영상 바로가기</a>
-      <div class="yt-note">참여한 닉네임으로 <strong class="yt-note-em">댓글을 작성</strong>하셔야 경품이 발송됩니다.</div>
-    </div>
-  </div>
-</div>
 
 <div id="dragGhost"></div>
 

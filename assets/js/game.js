@@ -1112,6 +1112,7 @@ function init() {
   if(goldenTime || goldenTimer) endGoldenTime();
   goldenCountdownActive = false;
   startOverlay.style.display='none';
+  document.getElementById('startBtn').style.display='none';
   goOverlay.classList.remove('show');
   document.getElementById('levelClearOverlay').classList.remove('show');
   document.body.classList.remove('no-scroll');
@@ -1477,12 +1478,8 @@ function showGameOverScreen() {
     nickArea.classList.remove('show');
     lbArea.classList.remove('show');
     document.getElementById('goNickInput').value = '';
-    document.getElementById('goEmailInput').value = '';
-    document.getElementById('privacyAgree').checked = false;
-    document.getElementById('privacySection').classList.add('show');
 
     const topTen = await isTopTen(finalScore);
-    const isEventEnded = new Date() > new Date('2026-04-03T23:59:59');
     if(topTen && finalScore > 0) {
       document.querySelector('.go-emoji').textContent = '🎉';
       document.querySelector('.go-title').textContent = '축하합니다!';
@@ -1490,13 +1487,9 @@ function showGameOverScreen() {
       spawnConfetti();
       playSFX('winner');
       retryBtn.style.display = 'none';
-      if(isEventEnded) {
-        document.getElementById('goEventEnded').classList.add('show');
-      } else {
-        document.getElementById('goNickSub').textContent = 'TOP 10 순위권에 진입했어요!';
-        nickArea.classList.add('show');
-        document.getElementById('goNickInput').focus();
-      }
+      document.getElementById('goNickSub').textContent = 'TOP 10 순위권에 진입했어요!';
+      nickArea.classList.add('show');
+      document.getElementById('goNickInput').focus();
     } else {
       document.querySelector('.go-emoji').textContent = '🔥';
       document.querySelector('.go-title').textContent = '그릴이 뒤집어졌다!';
@@ -1621,79 +1614,32 @@ document.getElementById('goNickSave').addEventListener('click', async ()=>{
   const input = document.getElementById('goNickInput');
   const name = input.value.trim();
   if(!name) { alert('닉네임을 입력해주세요.'); input.focus(); return; }
-  const emailInput = document.getElementById('goEmailInput');
-  const email = emailInput.value.trim();
-  if(!email) {
-    alert('이메일 주소를 입력해주세요.');
-    emailInput.focus();
-    return;
-  }
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    alert('올바른 이메일 주소를 입력해주세요.');
-    emailInput.focus();
-    return;
-  }
-  if(!document.getElementById('privacyAgree').checked) {
-    alert('이벤트 참여를 위해 이메일 수집에 동의해주세요.');
-    const checkLabel = document.querySelector('.privacy-check');
-    checkLabel.classList.remove('highlight');
-    void checkLabel.offsetHeight;
-    checkLabel.classList.add('highlight');
-    document.getElementById('privacyAgree').focus();
-    return;
-  }
 
-  // 확인 팝업 표시
-  document.getElementById('confirmNick').textContent = name;
-  document.getElementById('confirmEmail').textContent = email;
-  document.getElementById('confirmModal').classList.add('show');
+  const finalScore = parseInt(document.getElementById('goCount').textContent) || 0;
+  const btn = document.getElementById('goNickSave');
+  btn.textContent = '저장 중...';
+  btn.disabled = true;
+
+  await saveScore(name, finalScore, '');
+
+  document.getElementById('goNickname').classList.remove('show');
+  const board = await loadLeaderboard();
+  renderLeaderboard(board, finalScore, name);
+  document.getElementById('goLeaderboard').classList.add('show');
+  document.getElementById('retryBtn').style.display = '';
+
+  btn.textContent = '저장';
+  btn.disabled = false;
 });
 
 // Enter 키로도 저장
 document.getElementById('goNickInput').addEventListener('keydown', (e)=>{
-  if(e.key === 'Enter') document.getElementById('goEmailInput').focus();
-});
-document.getElementById('goEmailInput').addEventListener('keydown', (e)=>{
   if(e.key === 'Enter') document.getElementById('goNickSave').click();
 });
-document.getElementById('goEmailInput').addEventListener('input', (e)=>{
-  const before = e.target.value;
-  e.target.value = before.replace(/[^a-zA-Z0-9@._\-+]/g, '');
-  if(before !== e.target.value && /[ㄱ-ㅎㅏ-ㅣ가-힣]/.test(before)) {
-    showEmailTooltip('이메일주소는 한글입력이 불가합니다');
-  }
-});
-
-function showEmailTooltip(msg) {
-  let tip = document.getElementById('emailTooltip');
-  if(!tip) {
-    tip = document.createElement('div');
-    tip.id = 'emailTooltip';
-    tip.style.cssText = 'position:absolute;background:rgba(0,0,0,0.85);color:#ffffff;font-size:12px;padding:6px 12px;border-radius:6px;pointer-events:none;opacity:0;transition:opacity .2s;white-space:nowrap;z-index:9999;';
-    document.body.appendChild(tip);
-  }
-  const input = document.getElementById('goEmailInput');
-  const rect = input.getBoundingClientRect();
-  tip.textContent = msg;
-  tip.style.left = rect.left + rect.width / 2 - tip.offsetWidth / 2 + 'px';
-  tip.style.top = rect.bottom + 6 + 'px';
-  tip.style.opacity = '1';
-  clearTimeout(tip._timer);
-  tip._timer = setTimeout(() => { tip.style.opacity = '0'; }, 1500);
-}
 
 // 건너뛰기 (저장 않고 랭킹만 보기)
 document.getElementById('goNickSkip').addEventListener('click', async ()=>{
   document.getElementById('goNickname').classList.remove('show');
-  const board = await loadLeaderboard();
-  renderLeaderboard(board, 0, '');
-  document.getElementById('goLeaderboard').classList.add('show');
-  document.getElementById('retryBtn').style.display = '';
-});
-
-// 이벤트 종료 팝업 - 랭킹 보기
-document.getElementById('goEventEndedClose').addEventListener('click', async ()=>{
-  document.getElementById('goEventEnded').classList.remove('show');
   const board = await loadLeaderboard();
   renderLeaderboard(board, 0, '');
   document.getElementById('goLeaderboard').classList.add('show');
@@ -1711,50 +1657,13 @@ document.querySelectorAll('.custom-modal-bg').forEach(bg=>{
     if(e.target === bg) bg.classList.remove('show');
   });
 });
-// 유튜브 모달 닫기
-// 게임방법 / 특수이모지 팝업
-document.getElementById('confirmCancel').addEventListener('click', ()=>{
-  document.getElementById('confirmModal').classList.remove('show');
-});
 
-document.getElementById('confirmOk').addEventListener('click', async ()=>{
-  document.getElementById('confirmModal').classList.remove('show');
-
-  const name  = document.getElementById('goNickInput').value.trim();
-  const email = document.getElementById('goEmailInput').value.trim();
-  const finalScore = parseInt(document.getElementById('goCount').textContent) || 0;
-
-  const btn = document.getElementById('goNickSave');
-  btn.textContent = '저장 중...';
-  btn.disabled = true;
-
-  await saveScore(name, finalScore, email);
-
-  document.getElementById('confirmModal').classList.remove('show');
-  document.getElementById('goNickname').classList.remove('show');
-
-  const board = await loadLeaderboard();
-  renderLeaderboard(board, finalScore, name);
-  document.getElementById('goLeaderboard').classList.add('show');
-  document.getElementById('retryBtn').style.display = '';
-
-  btn.textContent = '저장';
-  btn.disabled = false;
-});
-
-document.getElementById('howToPlayBtn').addEventListener('click', ()=>{
-  document.getElementById('howToPlayModal').classList.add('show');
-});
-document.getElementById('specialInfoBtn').addEventListener('click', ()=>{
-  document.getElementById('specialInfoModal').classList.add('show');
-});
 
 document.getElementById('retryBtn').addEventListener('click', ()=>{
   // 낙하 중인 이모지 제거
   document.querySelectorAll('.falling-emoji').forEach(el=>el.remove());
   // 랭킹 UI 초기화
   document.getElementById('goNickname').classList.remove('show');
-  document.getElementById('goEventEnded').classList.remove('show');
   document.getElementById('goLeaderboard').classList.remove('show');
   document.getElementById('retryBtn').style.display = '';
   playSFX('start');
